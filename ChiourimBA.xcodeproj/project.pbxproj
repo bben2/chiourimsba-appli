@@ -1,0 +1,570 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		103769783D0C6881563E07BE /* ReecritureLienTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ECFC8F5E237831CD36700D /* ReecritureLienTests.swift */; };
+		16D165F128EFB98E5199C128 /* DiscussionWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C5D264BB0B0B047AA6B50A /* DiscussionWidget.swift */; };
+		23BDEEBDA3D72259A040740C /* TypeMIME.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B3A0AF90815E92BB371025 /* TypeMIME.swift */; };
+		286B83376A2B9F8B1D552B72 /* ReecritureLien.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA37C749619040B3A30D94F /* ReecritureLien.swift */; };
+		30A6A8DAC52936AE42AD4459 /* ModelesLocaux.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264EB9AEBEF416020094615E /* ModelesLocaux.swift */; };
+		3805E101DE884AE12F5F2321 /* GestionnaireSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E120BBA0FFD8F2E56184A0 /* GestionnaireSchema.swift */; };
+		3E242837660E0121B01C6011 /* Bibliotheque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CF249533CD6794A70B221F /* Bibliotheque.swift */; };
+		3EF8EA5B15D5A119384DBA83 /* VueReglages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD8F17C44E828EB28C0A8E4 /* VueReglages.swift */; };
+		405604BEB814C37E651A6CDC /* URLGitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163037A48C0A9AC6FA9CF694 /* URLGitHub.swift */; };
+		47DC13D6C0BC90B9C70644E5 /* PageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A61D8C6CACDDBBE805B432 /* PageMessage.swift */; };
+		483F965CF267AA7CF00C5951 /* OngletBibliotheque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFAE68C5E6B4B957087830A /* OngletBibliotheque.swift */; };
+		48D3386D92C23A7251BA01FC /* CheminContenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D3523424CC8234E37F297C /* CheminContenu.swift */; };
+		4C449EA1E5E4ABED13E381BA /* CheminContenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04073A569324718E175A61C /* CheminContenuTests.swift */; };
+		4E223344D00FEC84B45C25B7 /* TypeMIMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FE2FF78747925DD869AB /* TypeMIMETests.swift */; };
+		5520327810FC4876ACB6E7EB /* MemoireLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D3ECFD1A1BE9DCC6CE06DC /* MemoireLecture.swift */; };
+		5A99327B8C29B82A8CE0466B /* VuePDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2949A9C64352F3341010A3 /* VuePDF.swift */; };
+		5AA5113987C99D63B3D0C14A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19DD4F414D7CC3C532774E0 /* Assets.xcassets */; };
+		63B84AC261CE7598950FDC4F /* CacheContenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3677E1F9EF1466B9EE36F207 /* CacheContenu.swift */; };
+		6DD5BF453CA00F6719E980CA /* PasserelleContenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4C679E48D1E8AD485FC849 /* PasserelleContenu.swift */; };
+		A7417FE3CF8F04558C3012CF /* ChiourimBAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458B5C67606B7E4B357983F7 /* ChiourimBAApp.swift */; };
+		A8F1DBC51F7AA07F89B73B34 /* VueSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EFE4F68A56ACFDAA1AD76D /* VueSafari.swift */; };
+		BF44277A316A6C85D16CCA12 /* TelechargementGuemaraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABE1BA1A22069B00A6D84A /* TelechargementGuemaraTests.swift */; };
+		C0C51AC74639A1567396EACF /* VueWeb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000E7BEA5DD907B0EBE3DE /* VueWeb.swift */; };
+		D6356C0175534C1648E1AD8B /* ExtracteurLiens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721B3CCD8ECB558351EB9212 /* ExtracteurLiens.swift */; };
+		E7AA3FEE1E0D2CCCA6B87777 /* FavorisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFB84F72B3C91A6F6265372 /* FavorisView.swift */; };
+		EF1C23404D94D084181BB633 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8B96B965EF01FD0F43DAED71 /* PrivacyInfo.xcprivacy */; };
+		F9A6F6EB41E160332B92A5B2 /* NavigationBibliotheque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E373158F46AF37B868EA2E3 /* NavigationBibliotheque.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		743A29DD8BF6938E6B4BBD33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B2AC514D41EC8F51E68C9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDC420E646CF12E586C5D631;
+			remoteInfo = ChiourimBA;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0A2949A9C64352F3341010A3 /* VuePDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VuePDF.swift; sourceTree = "<group>"; };
+		0C56FE2FF78747925DD869AB /* TypeMIMETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMIMETests.swift; sourceTree = "<group>"; };
+		0CFB84F72B3C91A6F6265372 /* FavorisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavorisView.swift; sourceTree = "<group>"; };
+		163037A48C0A9AC6FA9CF694 /* URLGitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLGitHub.swift; sourceTree = "<group>"; };
+		20000E7BEA5DD907B0EBE3DE /* VueWeb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VueWeb.swift; sourceTree = "<group>"; };
+		264EB9AEBEF416020094615E /* ModelesLocaux.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelesLocaux.swift; sourceTree = "<group>"; };
+		3677E1F9EF1466B9EE36F207 /* CacheContenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheContenu.swift; sourceTree = "<group>"; };
+		3C4C679E48D1E8AD485FC849 /* PasserelleContenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasserelleContenu.swift; sourceTree = "<group>"; };
+		458B5C67606B7E4B357983F7 /* ChiourimBAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChiourimBAApp.swift; sourceTree = "<group>"; };
+		48CF249533CD6794A70B221F /* Bibliotheque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bibliotheque.swift; sourceTree = "<group>"; };
+		4EFAE68C5E6B4B957087830A /* OngletBibliotheque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngletBibliotheque.swift; sourceTree = "<group>"; };
+		5FA37C749619040B3A30D94F /* ReecritureLien.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReecritureLien.swift; sourceTree = "<group>"; };
+		6E373158F46AF37B868EA2E3 /* NavigationBibliotheque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBibliotheque.swift; sourceTree = "<group>"; };
+		721B3CCD8ECB558351EB9212 /* ExtracteurLiens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtracteurLiens.swift; sourceTree = "<group>"; };
+		722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ChiourimBA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABE1BA1A22069B00A6D84A /* TelechargementGuemaraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelechargementGuemaraTests.swift; sourceTree = "<group>"; };
+		76E120BBA0FFD8F2E56184A0 /* GestionnaireSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestionnaireSchema.swift; sourceTree = "<group>"; };
+		7BD8F17C44E828EB28C0A8E4 /* VueReglages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VueReglages.swift; sourceTree = "<group>"; };
+		85B3A0AF90815E92BB371025 /* TypeMIME.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMIME.swift; sourceTree = "<group>"; };
+		87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ChiourimBATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B96B965EF01FD0F43DAED71 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		92C5D264BB0B0B047AA6B50A /* DiscussionWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionWidget.swift; sourceTree = "<group>"; };
+		B3ECFC8F5E237831CD36700D /* ReecritureLienTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReecritureLienTests.swift; sourceTree = "<group>"; };
+		C7EFE4F68A56ACFDAA1AD76D /* VueSafari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VueSafari.swift; sourceTree = "<group>"; };
+		D04073A569324718E175A61C /* CheminContenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheminContenuTests.swift; sourceTree = "<group>"; };
+		D3D3523424CC8234E37F297C /* CheminContenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheminContenu.swift; sourceTree = "<group>"; };
+		D5A61D8C6CACDDBBE805B432 /* PageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageMessage.swift; sourceTree = "<group>"; };
+		E19DD4F414D7CC3C532774E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F0D3ECFD1A1BE9DCC6CE06DC /* MemoireLecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoireLecture.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		48DC4F95FBDA0C9E492DA7B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */,
+				87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		679DA36B1D93B710AC2FF5E0 /* Lecture */ = {
+			isa = PBXGroup;
+			children = (
+				92C5D264BB0B0B047AA6B50A /* DiscussionWidget.swift */,
+				76E120BBA0FFD8F2E56184A0 /* GestionnaireSchema.swift */,
+				0A2949A9C64352F3341010A3 /* VuePDF.swift */,
+				C7EFE4F68A56ACFDAA1AD76D /* VueSafari.swift */,
+				20000E7BEA5DD907B0EBE3DE /* VueWeb.swift */,
+			);
+			path = Lecture;
+			sourceTree = "<group>";
+		};
+		6FA44D3C7EFC42F9F6CD1ED1 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				0CFB84F72B3C91A6F6265372 /* FavorisView.swift */,
+				6E373158F46AF37B868EA2E3 /* NavigationBibliotheque.swift */,
+				4EFAE68C5E6B4B957087830A /* OngletBibliotheque.swift */,
+				7BD8F17C44E828EB28C0A8E4 /* VueReglages.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		7D90CCF62AC5078E5330287D /* Reseau */ = {
+			isa = PBXGroup;
+			children = (
+				3677E1F9EF1466B9EE36F207 /* CacheContenu.swift */,
+				3C4C679E48D1E8AD485FC849 /* PasserelleContenu.swift */,
+			);
+			path = Reseau;
+			sourceTree = "<group>";
+		};
+		A575DF74110888C778A27EC5 /* Modele */ = {
+			isa = PBXGroup;
+			children = (
+				48CF249533CD6794A70B221F /* Bibliotheque.swift */,
+				D3D3523424CC8234E37F297C /* CheminContenu.swift */,
+				721B3CCD8ECB558351EB9212 /* ExtracteurLiens.swift */,
+				F0D3ECFD1A1BE9DCC6CE06DC /* MemoireLecture.swift */,
+				264EB9AEBEF416020094615E /* ModelesLocaux.swift */,
+				D5A61D8C6CACDDBBE805B432 /* PageMessage.swift */,
+				5FA37C749619040B3A30D94F /* ReecritureLien.swift */,
+				85B3A0AF90815E92BB371025 /* TypeMIME.swift */,
+				163037A48C0A9AC6FA9CF694 /* URLGitHub.swift */,
+			);
+			path = Modele;
+			sourceTree = "<group>";
+		};
+		A912F7014534F5B75EF95C2E = {
+			isa = PBXGroup;
+			children = (
+				BAAAFFC2BE8497B11A70B7E3 /* ChiourimBA */,
+				F8CD1FA5CE2E923E47A5B8AA /* ChiourimBATests */,
+				48DC4F95FBDA0C9E492DA7B4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BAAAFFC2BE8497B11A70B7E3 /* ChiourimBA */ = {
+			isa = PBXGroup;
+			children = (
+				E19DD4F414D7CC3C532774E0 /* Assets.xcassets */,
+				458B5C67606B7E4B357983F7 /* ChiourimBAApp.swift */,
+				8B96B965EF01FD0F43DAED71 /* PrivacyInfo.xcprivacy */,
+				6FA44D3C7EFC42F9F6CD1ED1 /* Interface */,
+				679DA36B1D93B710AC2FF5E0 /* Lecture */,
+				A575DF74110888C778A27EC5 /* Modele */,
+				7D90CCF62AC5078E5330287D /* Reseau */,
+			);
+			path = ChiourimBA;
+			sourceTree = "<group>";
+		};
+		F8CD1FA5CE2E923E47A5B8AA /* ChiourimBATests */ = {
+			isa = PBXGroup;
+			children = (
+				D04073A569324718E175A61C /* CheminContenuTests.swift */,
+				B3ECFC8F5E237831CD36700D /* ReecritureLienTests.swift */,
+				74ABE1BA1A22069B00A6D84A /* TelechargementGuemaraTests.swift */,
+				0C56FE2FF78747925DD869AB /* TypeMIMETests.swift */,
+			);
+			path = ChiourimBATests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BDC420E646CF12E586C5D631 /* ChiourimBA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8CC424098CD0FC28941694C2 /* Build configuration list for PBXNativeTarget "ChiourimBA" */;
+			buildPhases = (
+				FCACA4097CF05AD2A0F0B9D8 /* Sources */,
+				021B3F919083F6813E6677C6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChiourimBA;
+			packageProductDependencies = (
+			);
+			productName = ChiourimBA;
+			productReference = 722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C593FD6D0F5F9C8FDAAC0305 /* ChiourimBATests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7BC5A498972E42A1B0BB20B1 /* Build configuration list for PBXNativeTarget "ChiourimBATests" */;
+			buildPhases = (
+				7D23D57189C55C9DC63AB035 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D52D48600DCD18A7A41EA10 /* PBXTargetDependency */,
+			);
+			name = ChiourimBATests;
+			packageProductDependencies = (
+			);
+			productName = ChiourimBATests;
+			productReference = 87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F5B2AC514D41EC8F51E68C9F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					BDC420E646CF12E586C5D631 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					C593FD6D0F5F9C8FDAAC0305 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 14910CA1A5BA33E097E85150 /* Build configuration list for PBXProject "ChiourimBA" */;
+			developmentRegion = fr;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				fr,
+			);
+			mainGroup = A912F7014534F5B75EF95C2E;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 48DC4F95FBDA0C9E492DA7B4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BDC420E646CF12E586C5D631 /* ChiourimBA */,
+				C593FD6D0F5F9C8FDAAC0305 /* ChiourimBATests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		021B3F919083F6813E6677C6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AA5113987C99D63B3D0C14A /* Assets.xcassets in Resources */,
+				EF1C23404D94D084181BB633 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7D23D57189C55C9DC63AB035 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C449EA1E5E4ABED13E381BA /* CheminContenuTests.swift in Sources */,
+				103769783D0C6881563E07BE /* ReecritureLienTests.swift in Sources */,
+				BF44277A316A6C85D16CCA12 /* TelechargementGuemaraTests.swift in Sources */,
+				4E223344D00FEC84B45C25B7 /* TypeMIMETests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FCACA4097CF05AD2A0F0B9D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E242837660E0121B01C6011 /* Bibliotheque.swift in Sources */,
+				63B84AC261CE7598950FDC4F /* CacheContenu.swift in Sources */,
+				48D3386D92C23A7251BA01FC /* CheminContenu.swift in Sources */,
+				A7417FE3CF8F04558C3012CF /* ChiourimBAApp.swift in Sources */,
+				16D165F128EFB98E5199C128 /* DiscussionWidget.swift in Sources */,
+				D6356C0175534C1648E1AD8B /* ExtracteurLiens.swift in Sources */,
+				E7AA3FEE1E0D2CCCA6B87777 /* FavorisView.swift in Sources */,
+				3805E101DE884AE12F5F2321 /* GestionnaireSchema.swift in Sources */,
+				5520327810FC4876ACB6E7EB /* MemoireLecture.swift in Sources */,
+				30A6A8DAC52936AE42AD4459 /* ModelesLocaux.swift in Sources */,
+				F9A6F6EB41E160332B92A5B2 /* NavigationBibliotheque.swift in Sources */,
+				483F965CF267AA7CF00C5951 /* OngletBibliotheque.swift in Sources */,
+				47DC13D6C0BC90B9C70644E5 /* PageMessage.swift in Sources */,
+				6DD5BF453CA00F6719E980CA /* PasserelleContenu.swift in Sources */,
+				286B83376A2B9F8B1D552B72 /* ReecritureLien.swift in Sources */,
+				23BDEEBDA3D72259A040740C /* TypeMIME.swift in Sources */,
+				405604BEB814C37E651A6CDC /* URLGitHub.swift in Sources */,
+				5A99327B8C29B82A8CE0466B /* VuePDF.swift in Sources */,
+				3EF8EA5B15D5A119384DBA83 /* VueReglages.swift in Sources */,
+				A8F1DBC51F7AA07F89B73B34 /* VueSafari.swift in Sources */,
+				C0C51AC74639A1567396EACF /* VueWeb.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D52D48600DCD18A7A41EA10 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDC420E646CF12E586C5D631 /* ChiourimBA */;
+			targetProxy = 743A29DD8BF6938E6B4BBD33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1B37AD88FDFD41C558620F9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-framework AppIntents";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChiourimBA.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChiourimBA";
+			};
+			name = Debug;
+		};
+		28FF0503FFF485F06DA1EDD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		34E2081F49B8785C7D70E4E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChiourimBA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-framework AppIntents";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app;
+				PRODUCT_NAME = ChiourimBA;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		36B4B9B2751F586B7F95922E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		56F86F769292D94EAE3A08A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-framework AppIntents";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChiourimBA.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChiourimBA";
+			};
+			name = Release;
+		};
+		6C854C67BAAB07BDD7112FA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChiourimBA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-framework AppIntents";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app;
+				PRODUCT_NAME = ChiourimBA;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		14910CA1A5BA33E097E85150 /* Build configuration list for PBXProject "ChiourimBA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28FF0503FFF485F06DA1EDD5 /* Debug */,
+				36B4B9B2751F586B7F95922E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7BC5A498972E42A1B0BB20B1 /* Build configuration list for PBXNativeTarget "ChiourimBATests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B37AD88FDFD41C558620F9C /* Debug */,
+				56F86F769292D94EAE3A08A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8CC424098CD0FC28941694C2 /* Build configuration list for PBXNativeTarget "ChiourimBA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34E2081F49B8785C7D70E4E3 /* Debug */,
+				6C854C67BAAB07BDD7112FA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F5B2AC514D41EC8F51E68C9F /* Project object */;
+}
