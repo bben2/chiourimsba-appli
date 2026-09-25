@@ -37,6 +37,10 @@ targets:
         CODE_SIGN_STYLE: Automatic
         ENABLE_PREVIEWS: NO
         TARGETED_DEVICE_FAMILY: "1,2"
+        # Version Mac (Mac Catalyst), signée « pour ce Mac seulement » sans compte développeur.
+        SUPPORTS_MACCATALYST: YES
+        DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: NO
+        "CODE_SIGN_IDENTITY[sdk=macosx*]": "-"
         # Évite l'avertissement « Metadata extraction skipped » sans exposer de raccourci.
         OTHER_LDFLAGS: "-framework AppIntents"
     scheme:
