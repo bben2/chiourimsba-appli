@@ -198,6 +198,15 @@ struct LectureView: View {
                     ForEach(Array(page.schemas.enumerated()), id: \.offset) { _, schema in
                         BoiteSchema(schema: schema)
                     }
+                    if collectionID == "guemara" {
+                        // Licence CC BY-NC du texte Koren : la citation est obligatoire.
+                        Text("Texte hébreu et araméen vocalisé : édition numérique William Davidson du Talmud Koren Noé, via Sefaria (licence CC BY-NC). Traduction française, notes et schémas : Chiourim BA (licence CC BY 4.0).")
+                            .font(.footnote)
+                            .foregroundStyle(Theme.gris)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 12)
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 18)
