@@ -1,6 +1,6 @@
 # Chiourim BA
 
-Application iPhone pour lire la bibliothèque de Benjamin Abbou : chiourim, Guemara, hassidout et halakha. Le texte est chargé depuis les dépôts GitHub publics, mis en cache sur l'appareil, et relu hors connexion. L'application ne contacte pas Vercel pour afficher les pages.
+Application iPhone pour lire la bibliothèque de Benjamin Abbou : Guemara, hassidout et halakha, en hébreu et en français, mises en page dans l'application. Les textes viennent du dépôt public `bben2/chiourimsba-donnees`. Ce qui a été ouvert reste lisible hors connexion.
 
 Swift uniquement, iOS 17, aucune dépendance tierce. Identifiant : `com.chiourimsba.app`. Nom affiché : Chiourim BA.
 
@@ -13,8 +13,8 @@ Swift uniquement, iOS 17, aucune dépendance tierce. Identifiant : `com.chiourim
    open ChiourimBA.xcodeproj
    ```
 
-2. Brancher l'iPhone. Dans Xcode : cible **ChiourimBA**, onglet **Signing & Capabilities**, cocher **Automatically manage signing**, choisir son équipe **Personal Team** (un identifiant Apple gratuit suffit). Aucun compte développeur payant n'est nécessaire pour installer sur son propre téléphone.
-3. Choisir l'iPhone comme destination et lancer. La signature personnelle est valable environ sept jours ; il suffit de relancer depuis Xcode pour la renouveler.
+2. Brancher l'iPhone. Dans Xcode : cible **ChiourimBA**, onglet **Signing & Capabilities**, cocher **Automatically manage signing**, choisir son équipe **Personal Team** (un identifiant Apple gratuit suffit).
+3. Choisir l'iPhone comme destination et lancer.
 
 `DEVELOPMENT_TEAM` est vide dans `project.yml` : Xcode le remplit au moment de signer, sans le committer.
 
@@ -23,44 +23,29 @@ Swift uniquement, iOS 17, aucune dépendance tierce. Identifiant : `com.chiourim
 1. S'inscrire au [Apple Developer Program](https://developer.apple.com/programs/) (99 $ par an).
 2. Dans Xcode, remplacer l'équipe personnelle par l'équipe du programme, puis **Product → Archive**.
 3. Dans l'Organizer : **Distribute App → App Store Connect → Upload**.
-4. Sur [App Store Connect](https://appstoreconnect.apple.com), attendre le traitement, remplir la fiche (captures, description, politique de confidentialité), ajouter des testeurs internes dans TestFlight.
-5. Quand la lecture hors connexion, les favoris, la reprise, le téléchargement d'un traité et la taille du texte ont été vérifiés sur un appareil, soumettre à la revue. Ces fonctions sont le cœur de l'app : ce n'est pas une simple coquille autour d'un site.
+4. Sur App Store Connect, remplir la fiche et ajouter des testeurs dans TestFlight.
+5. La lecture native, le hors-ligne, les favoris, les annotations et la reprise de lecture sont le cœur de l'app.
 
-L'application ne collecte aucune donnée. Le fichier `ChiourimBA/PrivacyInfo.xcprivacy` le déclare.
+L'application ne collecte aucune donnée de suivi. Le fichier `ChiourimBA/PrivacyInfo.xcprivacy` le déclare. Un signalement d'erreur est un envoi volontaire vers `https://chiourimsba.vercel.app/api/signaler`, sans jeton dans l'app.
 
-## Schéma `chiourim://`
+## D'où viennent les textes
 
-La WebView ne charge jamais `raw.githubusercontent.com` directement : GitHub sert ces fichiers en `text/plain` et le HTML s'afficherait en code source. Un `WKURLSchemeHandler` intercepte `chiourim://`, télécharge le fichier, et le renvoie avec le type MIME de l'extension (`.html` → `text/html; charset=utf-8`, et de même pour css, js, svg, png, jpg, webp, pdf, json, woff2…).
+Constante `SourceDonnees.base` :
 
-| Hôte | Dépôt | URL publique partagée |
-|---|---|---|
-| `chiourim://portail/…` | `bben2/chiourimsba-portail` | `https://chiourimsba.vercel.app/…` |
-| `chiourim://guemara/…` | `bben2/chiourimsba-guemara` | `https://guemara.vercel.app/…` |
-| `chiourim://hassidout/…` | `bben2/chiourimsba-hassidout` | `https://hassidout.vercel.app/…` |
-| `chiourim://halakha/…` | `bben2/chiourimsba-halakha` | `https://halakha.vercel.app/…` |
+`https://raw.githubusercontent.com/bben2/chiourimsba-donnees/main/`
 
-Un chemin qui se termine par `/` sert `index.html`. Le cache est dans `Library/Caches/Contenu/<site>/<chemin>`.
+Le catalogue est `catalogue.json`. Une page est `guemara/<Traité>/<amud>.json` ou `hassidout/<livre>/<section>.json`. Le cache est dans Application Support (`ChiourimBA/fichiers`). Au lancement, le catalogue est rafraîchi si le réseau est là. Le bouton « Télécharger ce livre pour le lire hors ligne » récupère toutes les unités d'une œuvre.
 
-Réécriture des liens, dans la navigation et dans le HTML servi :
+Sur le simulateur, si `~/sefaria_translate/donnees/` contient déjà les fichiers, ils sont lus à la place du réseau.
 
-| Lien rencontré | Devenu |
-|---|---|
-| `https://chiourimsba.vercel.app/…` | `chiourim://portail/…` |
-| `https://guemara.vercel.app/…` | `chiourim://guemara/…` |
-| `https://hassidout.vercel.app/…` | `chiourim://hassidout/…` |
-| `https://halakha.vercel.app/…` | `chiourim://halakha/…` |
-| `https://otsrot.vercel.app/…` | bloqué |
-| `mailto:` | application Mail |
-| autre lien (Sefaria, etc.) | Safari |
+Le portail « Chiourim BA » et « Questions à l'IA » sont les deux seules pages web (plus les schémas SVG). Le reste est natif.
 
-Le partage envoie l'adresse Vercel, pour qu'un correspondant sans l'application puisse ouvrir la page. Le script `chat.js` est retiré : pour le rétablir plus tard, passer `DiscussionWidget.estActive` à `true`.
+## Mon espace
 
-## Ajouter un site
+Favoris, position de lecture, surlignages et notes sont dans SwiftData, sur l'appareil. Les signalements en attente (réseau absent, ou réponse 503 « Les signalements ouvrent bientôt ») sont dans `signalements.json` et renvoyés au lancement suivant.
 
-Une ligne dans le tableau `Bibliotheque.sites` (`ChiourimBA/Modele/Bibliotheque.swift`) :
+`Config.connexionActive` reste faux tant que le compte développeur payant n'est pas en place : le bouton « Se connecter avec Apple » est prêt dans le code, pas affiché. `Config.urlDons` reste vide : « Nous soutenir » est caché. Les deux se lisent dans l'Info.plist (`ConnexionActive`, `URLDons`) le jour où on les remplira.
 
-```swift
-Site(id: "michna", depot: "chiourimsba-michna", hoteVercel: "michna.vercel.app", titreOnglet: "Michna", nom: "Michna", symbole: "book"),
-```
+## Ajouter une collection
 
-L'onglet, l'hôte `chiourim://michna/` et la réécriture du domaine Vercel suivent cette ligne. Le dépôt GitHub doit être public, sur la branche `main`, et servir un `index.html` à la racine.
+Le catalogue distant porte les œuvres. L'app affiche les collections `guemara`, `hassidout` et `halakha`. Une collection vide, comme la halakha aujourd'hui, montre l'écran « Bientôt dans l'appli ».

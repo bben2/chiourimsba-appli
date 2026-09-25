@@ -3,59 +3,65 @@ import SwiftUI
 
 @main
 struct ChiourimBAApp: App {
-    private let conteneur: ModelContainer
-
-    init() {
-        let schema = Schema([Favori.self, EntreeHistorique.self])
-        do {
-            conteneur = try ModelContainer(
-                for: schema,
-                configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-            )
-        } catch {
-            do {
-                conteneur = try ModelContainer(
-                    for: schema,
-                    configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-                )
-            } catch {
-                fatalError("Le stockage local est indisponible : \(error.localizedDescription)")
-            }
-        }
-    }
+    @State private var magasin = MagasinTextes()
+    @State private var navigation = NavigationApp()
+    private let conteneur = FabriqueConteneur.creer()
 
     var body: some Scene {
         WindowGroup {
             RacineView()
+                .environment(magasin)
+                .environment(navigation)
+                .modelContainer(conteneur)
+                .tint(Theme.bleu)
+                .task {
+                    _ = ReseauEtat.partage.enLigne
+                    await magasin.rafraichirCatalogue()
+                }
+                .task {
+                    await SignalementService.retenter(FileSignalements.standard())
+                }
         }
-        .modelContainer(conteneur)
     }
 }
 
 struct RacineView: View {
-    @State private var navigation = NavigationBibliotheque()
+    @Environment(NavigationApp.self) private var navigation
 
     var body: some View {
-        TabView(selection: Binding(
-            get: { navigation.onglet },
-            set: { navigation.onglet = $0 }
-        )) {
-            ForEach(Bibliotheque.sites) { site in
-                OngletBibliotheque(site: site)
-                    .tabItem { Label(site.titreOnglet, systemImage: site.symbole) }
-                    .tag(OngletApp.site(site.id))
+        @Bindable var navigation = navigation
+        TabView(selection: $navigation.onglet) {
+            NavigationStack {
+                AccueilView()
             }
-            FavorisView()
-                .tabItem { Label("Favoris", systemImage: "star") }
-                .tag(OngletApp.favoris)
-        }
-        .environment(navigation)
-        .tint(Color.accentColor)
-        .task {
-            while !Task.isCancelled {
-                await PasserelleContenu.partagee.verifierRevisionsSiBesoin()
-                try? await Task.sleep(for: .seconds(3600))
+            .tabItem { Label("Chiourim", systemImage: "house") }
+            .tag(OngletApp.chiourim)
+
+            NavigationStack {
+                ListeOeuvresView(collectionID: "guemara")
             }
+            .tabItem { Label("Guemara", systemImage: "book") }
+            .tag(OngletApp.guemara)
+
+            NavigationStack {
+                ListeOeuvresView(collectionID: "hassidout")
+            }
+            .tabItem { Label("Hassidout", systemImage: "flame") }
+            .tag(OngletApp.hassidout)
+
+            NavigationStack {
+                ListeOeuvresView(collectionID: "halakha")
+            }
+            .tabItem { Label("Halakha", systemImage: "scalemass") }
+            .tag(OngletApp.halakha)
+
+            NavigationStack {
+                EspaceView()
+            }
+            .tabItem { Label("Mon espace", systemImage: "bookmark") }
+            .tag(OngletApp.espace)
         }
+        .toolbarBackground(Theme.papier, for: .tabBar)
+        .toolbarBackground(.visible, for: .tabBar)
     }
 }
