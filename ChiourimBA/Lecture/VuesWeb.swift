@@ -47,6 +47,16 @@ struct VuePortail: UIViewRepresentable {
     }
 }
 
+/// La taille vient du viewBox, pas du contenu web : un `contentSize` signalé
+/// pendant `layoutSubviews` fait avorter AttributeGraph.
+private final class WebSchema: WKWebView {
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
+    }
+
+    override func invalidateIntrinsicContentSize() {}
+}
+
 struct VueSchema: UIViewRepresentable {
     var svg: String
 
@@ -55,11 +65,12 @@ struct VueSchema: UIViewRepresentable {
         let preferences = WKWebpagePreferences()
         preferences.allowsContentJavaScript = false
         configuration.defaultWebpagePreferences = preferences
-        let web = WKWebView(frame: .zero, configuration: configuration)
+        let web = WebSchema(frame: .zero, configuration: configuration)
         web.isOpaque = false
         web.backgroundColor = .clear
         web.scrollView.backgroundColor = .clear
         web.scrollView.isScrollEnabled = false
+        web.scrollView.contentInsetAdjustmentBehavior = .never
         web.isUserInteractionEnabled = false
         web.accessibilityElementsHidden = true
         charger(web)
@@ -71,6 +82,21 @@ struct VueSchema: UIViewRepresentable {
             context.coordinator.dernier = svg
             charger(web)
         }
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: WKWebView, context: Context) -> CGSize? {
+        let ratio = max(MesureSVG.ratio(svg), 0.25)
+        if let largeur = proposal.width, largeur.isFinite, largeur > 1,
+           let hauteur = proposal.height, hauteur.isFinite, hauteur > 1 {
+            return CGSize(width: largeur, height: hauteur)
+        }
+        let largeur: CGFloat
+        if let proposee = proposal.width, proposee.isFinite, proposee > 1 {
+            largeur = min(proposee, 4096)
+        } else {
+            largeur = 320
+        }
+        return CGSize(width: largeur, height: max((largeur / ratio).rounded(.up), 1))
     }
 
     func makeCoordinator() -> Memo { Memo(dernier: svg) }

@@ -91,6 +91,23 @@ struct SqueletteLignes: View {
     }
 }
 
+/// Ne propage pas l'invalidation de taille intrinsèque : elle réveille
+/// `ViewGraph.beginNextUpdate` depuis `layoutSubviews` et AttributeGraph avorte (`value_set`).
+private final class EtiquetteLecture: UILabel {
+    private var ajuste = false
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let largeur = bounds.width
+        guard largeur > 1, abs(preferredMaxLayoutWidth - largeur) > 0.5, !ajuste else { return }
+        ajuste = true
+        preferredMaxLayoutWidth = largeur
+        ajuste = false
+    }
+
+    override func invalidateIntrinsicContentSize() {}
+}
+
 struct TexteJustifie: UIViewRepresentable {
     var texte: String
     var police: String
@@ -101,8 +118,10 @@ struct TexteJustifie: UIViewRepresentable {
     @Environment(\.colorScheme) private var schema
     @Environment(\.dynamicTypeSize) private var typeDynamique
 
+    func makeCoordinator() -> Sonde { Sonde() }
+
     func makeUIView(context: Context) -> UILabel {
-        let label = UILabel()
+        let label = EtiquetteLecture()
         label.numberOfLines = 0
         label.backgroundColor = .clear
         label.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -112,19 +131,10 @@ struct TexteJustifie: UIViewRepresentable {
     }
 
     func updateUIView(_ label: UILabel, context: Context) {
-        let brut = UIFont(name: police, size: taille) ?? .systemFont(ofSize: taille)
-        let policeAdaptee = UIFontMetrics(forTextStyle: .body).scaledFont(for: brut)
-        let trait = UITraitCollection(userInterfaceStyle: schema == .dark ? .dark : .light)
-        let couleur = (UIColor(named: teinte) ?? .label).resolvedColor(with: trait)
-        let style = NSMutableParagraphStyle()
-        style.alignment = etirer ? .justified : (rtl ? .right : .natural)
-        style.baseWritingDirection = rtl ? .rightToLeft : .leftToRight
-        style.lineSpacing = typeDynamique.isAccessibilitySize ? 6 : 4
-        label.attributedText = NSAttributedString(string: texte, attributes: [
-            .font: policeAdaptee,
-            .paragraphStyle: style,
-            .foregroundColor: couleur
-        ])
+        let chaine = attributs()
+        if label.attributedText != chaine {
+            label.attributedText = chaine
+        }
         label.accessibilityLanguage = rtl ? "he" : "fr"
         label.accessibilityLabel = texte
         label.isAccessibilityElement = true
@@ -133,38 +143,159 @@ struct TexteJustifie: UIViewRepresentable {
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
-        let largeurMax = proposal.width ?? 320
-        uiView.preferredMaxLayoutWidth = largeurMax
-        let mesure = uiView.sizeThatFits(CGSize(width: largeurMax, height: .greatestFiniteMagnitude))
-        let largeur = etirer ? largeurMax : min(largeurMax, ceil(mesure.width))
-        return CGSize(width: max(largeur, 1), height: max(ceil(mesure.height), 1))
+        // Sonde hors hiérarchie : écrire preferredMaxLayoutWidth sur l'étiquette affichée
+        // invalide la mise en page en cours et fait planter AttributeGraph.
+        let largeurMax = largeurMesure(proposal)
+        let sonde = context.coordinator.etiquette
+        sonde.attributedText = attributs()
+        sonde.numberOfLines = 0
+        sonde.lineBreakMode = .byWordWrapping
+        sonde.preferredMaxLayoutWidth = largeurMax
+        let mesure = sonde.sizeThatFits(CGSize(width: largeurMax, height: .greatestFiniteMagnitude))
+        let largeurTexte = mesure.width.isFinite ? ceil(mesure.width) : 1
+        let largeur = etirer ? largeurMax : min(largeurMax, max(largeurTexte, 1))
+        let hauteur = mesure.height.isFinite ? ceil(mesure.height) : 1
+        return CGSize(width: max(largeur, 1), height: max(hauteur, 1))
+    }
+
+    private func largeurMesure(_ proposal: ProposedViewSize) -> CGFloat {
+        guard let largeur = proposal.width, largeur.isFinite, largeur > 1 else { return 320 }
+        return min(largeur, 4096)
+    }
+
+    private func attributs() -> NSAttributedString {
+        let brut = UIFont(name: police, size: taille) ?? .systemFont(ofSize: taille)
+        let policeAdaptee = UIFontMetrics(forTextStyle: .body).scaledFont(for: brut)
+        let trait = UITraitCollection(userInterfaceStyle: schema == .dark ? .dark : .light)
+        let couleur = (UIColor(named: teinte) ?? .label).resolvedColor(with: trait)
+        let style = NSMutableParagraphStyle()
+        style.alignment = etirer ? .justified : (rtl ? .right : .natural)
+        style.baseWritingDirection = rtl ? .rightToLeft : .leftToRight
+        style.lineSpacing = typeDynamique.isAccessibilitySize ? 6 : 4
+        return NSAttributedString(string: texte, attributes: [
+            .font: policeAdaptee,
+            .paragraphStyle: style,
+            .foregroundColor: couleur
+        ])
+    }
+
+    @MainActor
+    final class Sonde {
+        let etiquette = UILabel()
+
+        init() {
+            etiquette.numberOfLines = 0
+            etiquette.lineBreakMode = .byWordWrapping
+        }
     }
 }
 
 enum HTMLSimple {
-    @MainActor
+    /// Conversion locale. `NSAttributedString` + HTML passe par WebKit (`NSHTMLReader`),
+    /// qui relance la run loop au milieu de `LazyVStack.sizeThatFits` et fait avorter AttributeGraph.
     static func attribue(_ html: String, taille: CGFloat) -> AttributedString {
-        let enveloppe = """
-        <!DOCTYPE html><html><head><meta charset="utf-8">
-        <style>body{font-family:'EB Garamond',Georgia,serif;font-size:\(Int(taille))px} p{margin:0 0 0.45em} </style>
-        </head><body>\(html)</body></html>
-        """
-        guard let data = enveloppe.data(using: .utf8),
-              let ns = try? NSAttributedString(
-                data: data,
-                options: [
-                    .documentType: NSAttributedString.DocumentType.html,
-                    .characterEncoding: String.Encoding.utf8.rawValue
-                ],
-                documentAttributes: nil
-              ) else {
-            let nu = html.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
-            return AttributedString(nu)
+        let police = Font.custom(Polices.garamond, size: taille)
+        let policeGras = Font.custom(Polices.garamondTitre, size: taille)
+        var resultat = AttributedString()
+        var tampon = ""
+        var gras = 0
+        var italique = 0
+        var index = html.startIndex
+
+        func vider() {
+            guard !tampon.isEmpty else { return }
+            var morceau = AttributedString(decoderEntites(tampon))
+            var fonte = gras > 0 ? policeGras : police
+            if italique > 0 { fonte = fonte.italic() }
+            morceau.font = fonte
+            resultat.append(morceau)
+            tampon.removeAll(keepingCapacity: true)
         }
-        let mutable = NSMutableAttributedString(attributedString: ns)
-        let tout = NSRange(location: 0, length: mutable.length)
-        mutable.removeAttribute(.foregroundColor, range: tout)
-        return AttributedString(mutable)
+
+        func saut() {
+            vider()
+            if resultat.characters.last != "\n" {
+                resultat.append(AttributedString("\n"))
+            }
+        }
+
+        while index < html.endIndex {
+            let caractere = html[index]
+            if caractere == "<" {
+                guard let fin = html[index...].firstIndex(of: ">") else {
+                    tampon.append(contentsOf: html[index...])
+                    break
+                }
+                let interieur = html[html.index(after: index)..<fin]
+                let fermante = interieur.first == "/"
+                let nom = interieur
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .lowercased()
+                    .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+                let balise = nom.split(whereSeparator: { $0 == " " || $0 == "\t" }).first.map(String.init) ?? ""
+                switch balise {
+                case "b", "strong":
+                    vider()
+                    gras = max(0, gras + (fermante ? -1 : 1))
+                case "i", "em":
+                    vider()
+                    italique = max(0, italique + (fermante ? -1 : 1))
+                case "br":
+                    saut()
+                case "p":
+                    if fermante { saut() }
+                default:
+                    break
+                }
+                index = html.index(after: fin)
+            } else {
+                tampon.append(caractere)
+                index = html.index(after: index)
+            }
+        }
+        vider()
+        while resultat.characters.last == "\n" {
+            resultat.characters.removeLast()
+        }
+        return resultat
+    }
+
+    private static func decoderEntites(_ texte: String) -> String {
+        guard texte.contains("&") else { return texte }
+        var sortie = ""
+        var index = texte.startIndex
+        while index < texte.endIndex {
+            if texte[index] == "&", let fin = texte[index...].firstIndex(of: ";"), texte.distance(from: index, to: fin) <= 12 {
+                let code = String(texte[index...fin])
+                if let remplace = entite(code) {
+                    sortie.append(remplace)
+                    index = texte.index(after: fin)
+                    continue
+                }
+            }
+            sortie.append(texte[index])
+            index = texte.index(after: index)
+        }
+        return sortie
+    }
+
+    private static func entite(_ code: String) -> String? {
+        switch code {
+        case "&amp;": return "&"
+        case "&lt;": return "<"
+        case "&gt;": return ">"
+        case "&quot;": return "\""
+        case "&apos;", "&#39;": return "'"
+        case "&nbsp;": return "\u{00A0}"
+        default:
+            if code.hasPrefix("&#x"), let valeur = Int(code.dropFirst(3).dropLast(), radix: 16), let scalaire = UnicodeScalar(valeur) {
+                return String(scalaire)
+            }
+            if code.hasPrefix("&#"), let valeur = Int(code.dropFirst(2).dropLast()), let scalaire = UnicodeScalar(valeur) {
+                return String(scalaire)
+            }
+            return nil
+        }
     }
 }
 

@@ -41,7 +41,10 @@ targets:
         OTHER_LDFLAGS: "-framework AppIntents"
     scheme:
       testTargets:
-        - ChiourimBATests
+        - name: ChiourimBATests
+          parallelizable: false
+        - name: ChiourimBAUITests
+          parallelizable: false
   ChiourimBATests:
     type: bundle.unit-test
     platform: iOS
@@ -60,3 +63,18 @@ targets:
         CODE_SIGN_STYLE: Automatic
         # Évite l'avertissement « Metadata extraction skipped » sans exposer de raccourci.
         OTHER_LDFLAGS: "-framework AppIntents"
+  ChiourimBAUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: ChiourimBAUITests
+    dependencies:
+      - target: ChiourimBA
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.chiourimsba.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: ChiourimBA
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic

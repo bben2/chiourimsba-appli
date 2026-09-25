@@ -50,6 +50,17 @@
                ReferencedContainer = "container:ChiourimBA.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D67BACAF3CB2DB69E4D1EEB4"
+               BuildableName = "ChiourimBAUITests.xctest"
+               BlueprintName = "ChiourimBAUITests"
+               ReferencedContainer = "container:ChiourimBA.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

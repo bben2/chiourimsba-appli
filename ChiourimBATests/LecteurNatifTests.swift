@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 import XCTest
 @testable import ChiourimBA
@@ -51,6 +52,12 @@ final class DecodageDonneesTests: XCTestCase {
         )
         XCTAssertNil(SourceDonnees.relatifSur("../secret.json"))
         XCTAssertEqual(SourceDonnees.relatifSur("/guemara/Bekhorot/2a.json"), "guemara/Bekhorot/2a.json")
+    }
+
+    func testExplicationHTMLSansWebKit() {
+        let texte = HTMLSimple.attribue("<p>Le <b>Chema</b> du soir.</p><p>a &amp; b</p>", taille: 18)
+        XCTAssertEqual(String(texte.characters), "Le Chema du soir.\na & b")
+        XCTAssertGreaterThan(texte.runs.count, 1)
     }
 
     func testPolicesEmbarquees() {

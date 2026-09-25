@@ -68,6 +68,23 @@ struct LectureView: View {
         )
     }
 
+    /// `scrollPosition` appelle le setter pendant `layoutSubviews`. Écrire `@State` à cet instant
+    /// fait avorter AttributeGraph (`value_set` dans `beginNextUpdate`).
+    private var positionDefilement: Binding<Int?> {
+        Binding(
+            get: { segmentVisible },
+            set: { nouveau in
+                guard let nouveau, nouveau != segmentVisible else { return }
+                let valeur = nouveau
+                Task { @MainActor in
+                    await Task.yield()
+                    guard segmentVisible != valeur else { return }
+                    segmentVisible = valeur
+                }
+            }
+        )
+    }
+
     private var oeuvre: Oeuvre? { magasin.oeuvre(collection: collectionID, id: oeuvreID) }
 
     private var unites: [String] { oeuvre?.unites ?? [] }
@@ -186,8 +203,13 @@ struct LectureView: View {
                 .padding(.vertical, 18)
                 .scrollTargetLayout()
             }
-            .scrollPosition(id: $segmentVisible, anchor: .top)
-            .onChange(of: segmentVisible) { _, _ in sauverPosition() }
+            .scrollPosition(id: positionDefilement, anchor: .top)
+            .onChange(of: segmentVisible) { _, _ in
+                Task { @MainActor in
+                    await Task.yield()
+                    sauverPosition()
+                }
+            }
             .simultaneousGesture(glissement)
         }
     }
@@ -227,7 +249,6 @@ struct LectureView: View {
             if let explication = segment.explication, !explication.isEmpty {
                 DisclosureGroup {
                     Text(HTMLSimple.attribue(explication, taille: tailleFR * echelle))
-                        .font(Polices.texte(tailleFR * echelle))
                         .foregroundStyle(Theme.encre)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 6)
@@ -362,17 +383,25 @@ struct LectureView: View {
         do {
             let chargee = try await magasin.ouvrirPage(chemin: chemin)
             if Task.isCancelled || demande != uniteCourante { return }
-            page = chargee
+            let index: Int
             if let deja = positions.first(where: { $0.cle == "\(collectionID)|\(oeuvreID)" }), deja.unite == unite {
-                segmentVisible = deja.indexSegment
+                index = deja.indexSegment
             } else if unite == uniteDepart {
-                segmentVisible = indexInitial
+                index = indexInitial
             } else {
-                segmentVisible = 0
+                index = 0
             }
+            segmentVisible = index
+            page = chargee
+            erreur = nil
+            chargement = false
+            // Laisser la première mise en page se terminer avant d'écrire SwiftData :
+            // un @Query invalidé pendant layoutSubviews reproduit le même SIGABRT.
+            await Task.yield()
+            if Task.isCancelled || demande != uniteCourante { return }
             marquerLue()
             sauverPosition()
-            erreur = nil
+            return
         } catch let erreurDonnees as ErreurDonnees {
             if page == nil { erreur = erreurDonnees.message }
         } catch {

@@ -24,6 +24,7 @@
 		5E3584B7FBD52614FB91A0D5 /* StylePlein.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80EC1029AD113331E1B5197 /* StylePlein.swift */; };
 		6B608E5BD9F808700AE1994C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EF7D465D2EA1DB249F0177 /* Theme.swift */; };
 		723BFC2865B3C4837FA404F7 /* FrankRuhlLibre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63AD0AC6287A6DDA0E24A3C1 /* FrankRuhlLibre.ttf */; };
+		7BF6F2E5A75CB05BAEB57569 /* ParcoursLectureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4323A40811CAF7761D54E /* ParcoursLectureUITests.swift */; };
 		85F2564F180854947B4349DC /* FeuilleAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2222F61C3B2EE6039441ADF /* FeuilleAnnotation.swift */; };
 		9B1F93C23FDC6EFB58F45006 /* LecteurNatifTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C34A87E760DED9889D1BD27 /* LecteurNatifTests.swift */; };
 		A7417FE3CF8F04558C3012CF /* ChiourimBAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458B5C67606B7E4B357983F7 /* ChiourimBAApp.swift */; };
@@ -43,6 +44,13 @@
 			remoteGlobalIDString = BDC420E646CF12E586C5D631;
 			remoteInfo = ChiourimBA;
 		};
+		BD7C9636E6C6AF6657EEFDC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B2AC514D41EC8F51E68C9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDC420E646CF12E586C5D631;
+			remoteInfo = ChiourimBA;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +58,7 @@
 		0FA683EC1F0A9CB45B15D1E7 /* Catalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
 		171F5F73010302FDA332B99F /* SommaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SommaireView.swift; sourceTree = "<group>"; };
 		17E49E81BD9D7A27F0078AC2 /* ClientDonnees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientDonnees.swift; sourceTree = "<group>"; };
+		183AEBA6D2E158787F996F59 /* ChiourimBAUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ChiourimBAUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		264EB9AEBEF416020094615E /* ModelesLocaux.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelesLocaux.swift; sourceTree = "<group>"; };
 		381464F8421E0E96A967FA34 /* CacheDisque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheDisque.swift; sourceTree = "<group>"; };
 		4132078B01E0B24150D9BE86 /* ListeOeuvresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeOeuvresView.swift; sourceTree = "<group>"; };
@@ -71,6 +80,7 @@
 		D80EC1029AD113331E1B5197 /* StylePlein.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylePlein.swift; sourceTree = "<group>"; };
 		E19DD4F414D7CC3C532774E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3E6442BD5F1BD1F593CB1AE /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		E5F4323A40811CAF7761D54E /* ParcoursLectureUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParcoursLectureUITests.swift; sourceTree = "<group>"; };
 		E7164ED8FDD66BED25944A62 /* ReglagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReglagesView.swift; sourceTree = "<group>"; };
 		F4EF7D465D2EA1DB249F0177 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		FCB1E5D89D0F152838CDB455 /* VuesWeb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VuesWeb.swift; sourceTree = "<group>"; };
@@ -82,6 +92,7 @@
 			children = (
 				722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */,
 				87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */,
+				183AEBA6D2E158787F996F59 /* ChiourimBAUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,6 +159,7 @@
 			children = (
 				BAAAFFC2BE8497B11A70B7E3 /* ChiourimBA */,
 				F8CD1FA5CE2E923E47A5B8AA /* ChiourimBATests */,
+				FC21C61EEBF03B2FDFAEDDDE /* ChiourimBAUITests */,
 				48DC4F95FBDA0C9E492DA7B4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -173,6 +185,14 @@
 				0C34A87E760DED9889D1BD27 /* LecteurNatifTests.swift */,
 			);
 			path = ChiourimBATests;
+			sourceTree = "<group>";
+		};
+		FC21C61EEBF03B2FDFAEDDDE /* ChiourimBAUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E5F4323A40811CAF7761D54E /* ParcoursLectureUITests.swift */,
+			);
+			path = ChiourimBAUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +234,24 @@
 			productReference = 87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D67BACAF3CB2DB69E4D1EEB4 /* ChiourimBAUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CD901EA7DBEA8D2AFCCCFA3 /* Build configuration list for PBXNativeTarget "ChiourimBAUITests" */;
+			buildPhases = (
+				9B850F2CC8471AFE7EB6BB97 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8DD53EA3F5963207C81926BF /* PBXTargetDependency */,
+			);
+			name = ChiourimBAUITests;
+			packageProductDependencies = (
+			);
+			productName = ChiourimBAUITests;
+			productReference = 183AEBA6D2E158787F996F59 /* ChiourimBAUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -230,6 +268,11 @@
 					C593FD6D0F5F9C8FDAAC0305 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
+					};
+					D67BACAF3CB2DB69E4D1EEB4 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = BDC420E646CF12E586C5D631;
 					};
 				};
 			};
@@ -249,6 +292,7 @@
 			targets = (
 				BDC420E646CF12E586C5D631 /* ChiourimBA */,
 				C593FD6D0F5F9C8FDAAC0305 /* ChiourimBATests */,
+				D67BACAF3CB2DB69E4D1EEB4 /* ChiourimBAUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -275,6 +319,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B1F93C23FDC6EFB58F45006 /* LecteurNatifTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B850F2CC8471AFE7EB6BB97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7BF6F2E5A75CB05BAEB57569 /* ParcoursLectureUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,9 +364,34 @@
 			target = BDC420E646CF12E586C5D631 /* ChiourimBA */;
 			targetProxy = 743A29DD8BF6938E6B4BBD33 /* PBXContainerItemProxy */;
 		};
+		8DD53EA3F5963207C81926BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDC420E646CF12E586C5D631 /* ChiourimBA */;
+			targetProxy = BD7C9636E6C6AF6657EEFDC2 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		114D0348D5E69473F463A79F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChiourimBA;
+			};
+			name = Release;
+		};
 		1B37AD88FDFD41C558620F9C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -538,6 +615,26 @@
 			};
 			name = Release;
 		};
+		7BB2721F3FC8ADCB362296BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChiourimBA;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -564,6 +661,15 @@
 			buildConfigurations = (
 				34E2081F49B8785C7D70E4E3 /* Debug */,
 				6C854C67BAAB07BDD7112FA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9CD901EA7DBEA8D2AFCCCFA3 /* Build configuration list for PBXNativeTarget "ChiourimBAUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BB2721F3FC8ADCB362296BB /* Debug */,
+				114D0348D5E69473F463A79F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
