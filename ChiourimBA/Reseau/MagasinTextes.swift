@@ -29,6 +29,12 @@ final class ReseauEtat {
 @Observable
 final class NavigationApp {
     var onglet = OngletApp.chiourim
+
+    init() {
+        if ProcessInfo.processInfo.arguments.contains("-captureEspace") {
+            onglet = .espace
+        }
+    }
 }
 
 enum OngletApp: String, Hashable, CaseIterable, Identifiable {

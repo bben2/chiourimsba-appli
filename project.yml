@@ -9,7 +9,7 @@ settings:
   base:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "1"
+    CURRENT_PROJECT_VERSION: "2"
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
     TARGETED_DEVICE_FAMILY: "1,2"
@@ -67,6 +67,26 @@ targets:
         CODE_SIGN_STYLE: Automatic
         # Évite l'avertissement « Metadata extraction skipped » sans exposer de raccourci.
         OTHER_LDFLAGS: "-framework AppIntents"
+  ChiourimBACaptures:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: ChiourimBACaptures
+    dependencies:
+      - target: ChiourimBA
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.chiourimsba.app.captures
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: ChiourimBA
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+    scheme:
+      testTargets:
+        - name: ChiourimBACaptures
+          parallelizable: false
+      gatherCoverageData: false
   ChiourimBAUITests:
     type: bundle.ui-testing
     platform: iOS

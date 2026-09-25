@@ -25,6 +25,7 @@
 		5E3584B7FBD52614FB91A0D5 /* StylePlein.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80EC1029AD113331E1B5197 /* StylePlein.swift */; };
 		6B608E5BD9F808700AE1994C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EF7D465D2EA1DB249F0177 /* Theme.swift */; };
 		723BFC2865B3C4837FA404F7 /* FrankRuhlLibre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63AD0AC6287A6DDA0E24A3C1 /* FrankRuhlLibre.ttf */; };
+		74985EF32957E6093A2AEDEF /* CapturesAppStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2A3323E60B303261EA6154 /* CapturesAppStoreUITests.swift */; };
 		7BE9CA737283BF076F27EC3A /* kitsour-001.json in Resources */ = {isa = PBXBuildFile; fileRef = B8CA2AD77E9992E1AD019E5C /* kitsour-001.json */; };
 		7BF6F2E5A75CB05BAEB57569 /* ParcoursLectureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4323A40811CAF7761D54E /* ParcoursLectureUITests.swift */; };
 		85F2564F180854947B4349DC /* FeuilleAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2222F61C3B2EE6039441ADF /* FeuilleAnnotation.swift */; };
@@ -53,6 +54,13 @@
 			remoteGlobalIDString = BDC420E646CF12E586C5D631;
 			remoteInfo = ChiourimBA;
 		};
+		E527525BEA921A43A9BECED8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B2AC514D41EC8F51E68C9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDC420E646CF12E586C5D631;
+			remoteInfo = ChiourimBA;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +78,7 @@
 		63AD0AC6287A6DDA0E24A3C1 /* FrankRuhlLibre.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FrankRuhlLibre.ttf; sourceTree = "<group>"; };
 		66B87DA29899998AE9AB7996 /* FrankRuhlLibre_OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FrankRuhlLibre_OFL.txt; sourceTree = "<group>"; };
 		66E89864625DCC8339B5D6AB /* LectureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureView.swift; sourceTree = "<group>"; };
+		6C2A3323E60B303261EA6154 /* CapturesAppStoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturesAppStoreUITests.swift; sourceTree = "<group>"; };
 		722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ChiourimBA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C491868B923DC23936C992 /* catalogue-halakha.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "catalogue-halakha.json"; sourceTree = "<group>"; };
 		79CEC0E873A631F6FB5214DD /* AccueilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccueilView.swift; sourceTree = "<group>"; };
@@ -88,6 +97,7 @@
 		E7164ED8FDD66BED25944A62 /* ReglagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReglagesView.swift; sourceTree = "<group>"; };
 		F4EF7D465D2EA1DB249F0177 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		FCB1E5D89D0F152838CDB455 /* VuesWeb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VuesWeb.swift; sourceTree = "<group>"; };
+		FF13A86E1E3BEDE6EAB3B495 /* ChiourimBACaptures.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ChiourimBACaptures.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -95,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */,
+				FF13A86E1E3BEDE6EAB3B495 /* ChiourimBACaptures.xctest */,
 				87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */,
 				183AEBA6D2E158787F996F59 /* ChiourimBAUITests.xctest */,
 			);
@@ -162,10 +173,19 @@
 			isa = PBXGroup;
 			children = (
 				BAAAFFC2BE8497B11A70B7E3 /* ChiourimBA */,
+				B935CA876EB3EE7DAD6712CF /* ChiourimBACaptures */,
 				F8CD1FA5CE2E923E47A5B8AA /* ChiourimBATests */,
 				FC21C61EEBF03B2FDFAEDDDE /* ChiourimBAUITests */,
 				48DC4F95FBDA0C9E492DA7B4 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		B935CA876EB3EE7DAD6712CF /* ChiourimBACaptures */ = {
+			isa = PBXGroup;
+			children = (
+				6C2A3323E60B303261EA6154 /* CapturesAppStoreUITests.swift */,
+			);
+			path = ChiourimBACaptures;
 			sourceTree = "<group>";
 		};
 		BAAAFFC2BE8497B11A70B7E3 /* ChiourimBA */ = {
@@ -204,6 +224,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0FEB8A95FC4D0812BC3CDCD1 /* ChiourimBACaptures */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F21FD9EAC5633617607890CA /* Build configuration list for PBXNativeTarget "ChiourimBACaptures" */;
+			buildPhases = (
+				7974219B2A6357E28F1124DF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB62D3FABAA2632FDE997B5F /* PBXTargetDependency */,
+			);
+			name = ChiourimBACaptures;
+			packageProductDependencies = (
+			);
+			productName = ChiourimBACaptures;
+			productReference = FF13A86E1E3BEDE6EAB3B495 /* ChiourimBACaptures.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		BDC420E646CF12E586C5D631 /* ChiourimBA */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8CC424098CD0FC28941694C2 /* Build configuration list for PBXNativeTarget "ChiourimBA" */;
@@ -268,6 +306,11 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					0FEB8A95FC4D0812BC3CDCD1 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = BDC420E646CF12E586C5D631;
+					};
 					BDC420E646CF12E586C5D631 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
@@ -298,6 +341,7 @@
 			projectRoot = "";
 			targets = (
 				BDC420E646CF12E586C5D631 /* ChiourimBA */,
+				0FEB8A95FC4D0812BC3CDCD1 /* ChiourimBACaptures */,
 				C593FD6D0F5F9C8FDAAC0305 /* ChiourimBATests */,
 				D67BACAF3CB2DB69E4D1EEB4 /* ChiourimBAUITests */,
 			);
@@ -330,6 +374,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7974219B2A6357E28F1124DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74985EF32957E6093A2AEDEF /* CapturesAppStoreUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7D23D57189C55C9DC63AB035 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +436,11 @@
 			isa = PBXTargetDependency;
 			target = BDC420E646CF12E586C5D631 /* ChiourimBA */;
 			targetProxy = BD7C9636E6C6AF6657EEFDC2 /* PBXContainerItemProxy */;
+		};
+		FB62D3FABAA2632FDE997B5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDC420E646CF12E586C5D631 /* ChiourimBA */;
+			targetProxy = E527525BEA921A43A9BECED8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -464,7 +521,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -561,7 +618,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -657,6 +714,46 @@
 			};
 			name = Debug;
 		};
+		8673DF1A4C8B2919D57EB08E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app.captures;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChiourimBA;
+			};
+			name = Debug;
+		};
+		C1AFF120D4257F2C41E5D2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiourimsba.app.captures;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChiourimBA;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -692,6 +789,15 @@
 			buildConfigurations = (
 				7BB2721F3FC8ADCB362296BB /* Debug */,
 				114D0348D5E69473F463A79F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F21FD9EAC5633617607890CA /* Build configuration list for PBXNativeTarget "ChiourimBACaptures" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8673DF1A4C8B2919D57EB08E /* Debug */,
+				C1AFF120D4257F2C41E5D2CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
