@@ -39,11 +39,31 @@ struct Oeuvre: Codable, Equatable, Sendable, Identifiable, Hashable {
     var auteur: String?
     var chemin: String
     var unites: [String]
+    var table: [PartieSommaire]? = nil
 
     enum CodingKeys: String, CodingKey {
-        case id, titre, auteur, chemin, unites
+        case id, titre, auteur, chemin, unites, table
         case titreHe = "titre_he"
     }
+}
+
+struct PartieSommaire: Codable, Equatable, Sendable, Hashable, Identifiable {
+    var partie: String
+    var partieHe: String?
+    var items: [ItemSommaire]
+
+    var id: String { partie + "|" + (partieHe ?? "") }
+
+    enum CodingKeys: String, CodingKey {
+        case partie, items
+        case partieHe = "partie_he"
+    }
+}
+
+struct ItemSommaire: Codable, Equatable, Sendable, Hashable, Identifiable {
+    var id: String
+    var titre: String
+    var detail: String?
 }
 
 enum OrdreTalmud {

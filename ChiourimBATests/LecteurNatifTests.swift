@@ -10,6 +10,7 @@ final class DecodageDonneesTests: XCTestCase {
         XCTAssertEqual(catalogue.collections.map(\.id), ["guemara", "hassidout", "halakha"])
         let bekhorot = try XCTUnwrap(catalogue.oeuvre(collection: "guemara", id: "Bekhorot"))
         XCTAssertEqual(bekhorot.unites, ["2a", "2b"])
+        XCTAssertNil(bekhorot.table)
         XCTAssertEqual(bekhorot.titreHe, "בכורות")
         let hassidout = try XCTUnwrap(catalogue.collection("hassidout")?.oeuvres.first)
         XCTAssertEqual(hassidout.auteur, "Rabbi Tsadok HaCohen de Lublin")
@@ -39,6 +40,15 @@ final class DecodageDonneesTests: XCTestCase {
 
         let ancienne = try ClientDonnees.decoderPage(Data(ExempleJSON.gloseTitre.utf8))
         XCTAssertEqual(ancienne.segments.first?.rashi.first?.dh, "מתני׳")
+    }
+
+    func testCatalogueAvecSommaire() throws {
+        let json = #"{"version":1,"mise_a_jour":"2026-09-25T10:00:00+02:00","collections":[{"id":"hassidout","titre":"Hassidout","titre_he":"חסידות","oeuvres":[{"id":"sfatemet","titre":"Sefat Emet","titre_he":"שפת אמת","chemin":"hassidout/sfatemet/","unites":["001"],"table":[{"partie":"Berechit","partie_he":"בראשית","items":[{"id":"001","titre":"Bereshit","detail":"Avec l'aide du Ciel"}]}]}]}]}"#
+        let catalogue = try ClientDonnees.decoderCatalogue(Data(json.utf8))
+        let oeuvre = try XCTUnwrap(catalogue.oeuvre(collection: "hassidout", id: "sfatemet"))
+        XCTAssertEqual(oeuvre.table?.first?.partie, "Berechit")
+        XCTAssertEqual(oeuvre.table?.first?.items.first?.titre, "Bereshit")
+        XCTAssertEqual(oeuvre.table?.first?.items.first?.detail, "Avec l'aide du Ciel")
     }
 
     func testCheminsPublics() {

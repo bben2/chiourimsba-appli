@@ -214,10 +214,14 @@ final class CapturesAppStoreUITests: XCTestCase {
     @discardableResult
     private func tapLaterale(_ titre: String) -> Bool {
         let predicat = NSPredicate(format: "label == %@", titre)
+        // iPad : barre latérale (cellules ou textes) ou cartes de l'accueil (« Guemara, 15 traités… »)
+        let debut = NSPredicate(format: "label BEGINSWITH %@", titre + ",")
         let candidats = [
             application.cells.matching(predicat).firstMatch,
             application.buttons.matching(predicat).firstMatch,
+            application.staticTexts.matching(predicat).firstMatch,
             application.otherElements.matching(predicat).firstMatch,
+            application.buttons.matching(debut).firstMatch,
         ]
         for candidat in candidats where candidat.exists && candidat.isHittable {
             candidat.tap()
