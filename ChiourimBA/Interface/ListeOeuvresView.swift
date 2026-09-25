@@ -145,7 +145,7 @@ struct ListeOeuvresView: View {
                 NavigationLink(value: RouteSommaire(collectionID: collectionID, oeuvreID: oeuvre.id)) {
                     ligne(oeuvre, premiere: index == 0)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(StylePlein())
             }
         }
         .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))

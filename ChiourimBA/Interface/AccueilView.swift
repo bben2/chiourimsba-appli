@@ -39,7 +39,7 @@ struct AccueilView: View {
                     } label: {
                         carteReprise(position)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(StylePlein())
                     .accessibilityHint("Ouvre la dernière page lue")
                 }
 
@@ -74,22 +74,22 @@ struct AccueilView: View {
                     NavigationLink(value: RouteWeb(titre: "Chiourim BA", url: Config.urlPortail, discussion: false)) {
                         ligneSimple(titre: "Chiourim BA", detail: "Les chiourim de la semaine, sur le portail")
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(StylePlein())
                     NavigationLink(value: RouteWeb(titre: "Questions à l'IA", url: Config.urlPortail, discussion: true)) {
                         ligneSimple(titre: "Questions à l'IA", detail: "La page de discussion du portail")
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(StylePlein())
                     NavigationLink {
                         LivresView()
                     } label: {
                         ligneSimple(titre: "Nos livres", detail: LivresPapier.liens.isEmpty ? "Bientôt" : "Les éditions imprimées")
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(StylePlein())
                     if let url = Config.urlDons {
                         NavigationLink(value: RouteWeb(titre: "Nous soutenir", url: url, discussion: false)) {
                             ligneSimple(titre: "Nous soutenir", detail: "Participer aux traductions")
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(StylePlein())
                     }
                 }
 
@@ -188,7 +188,7 @@ struct AccueilView: View {
             .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
             .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.filet, lineWidth: 1))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(StylePlein())
         .accessibilityLabel("\(titre), \(detailCollection(id, nombre: nombre))")
     }
 
@@ -269,7 +269,7 @@ struct LivresView: View {
                             }
                             .frame(minHeight: 44)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(StylePlein())
                     }
                 }
             }

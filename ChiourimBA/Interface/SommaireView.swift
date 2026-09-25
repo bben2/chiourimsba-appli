@@ -132,7 +132,7 @@ struct SommaireView: View {
                             .background(lue ? Theme.bleu : Theme.papier, in: RoundedRectangle(cornerRadius: 10))
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.filet, lineWidth: 1))
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(StylePlein())
                     .accessibilityLabel(unite)
                     .accessibilityAddTraits(lues.contains { $0.cle == "\(oeuvre.id)/\(unite)" } ? .isSelected : [])
                 }

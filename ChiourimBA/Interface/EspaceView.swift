@@ -47,7 +47,7 @@ struct EspaceView: View {
                                 } label: {
                                     lignePosition(position, premiere: index == 0)
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(StylePlein())
                             }
                         }
                         .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
@@ -207,7 +207,7 @@ struct ListeFavorisView: View {
                             .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
                             .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.filet, lineWidth: 1))
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(StylePlein())
                     }
                 }
             }
@@ -250,7 +250,7 @@ struct ListeAnnotationsView: View {
                             .background(note.surlignage ? Theme.surbrillance.opacity(0.45) : Theme.papier, in: RoundedRectangle(cornerRadius: 14))
                             .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.filet, lineWidth: 1))
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(StylePlein())
                     }
                 }
             }
