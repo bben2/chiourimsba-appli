@@ -1,0 +1,54 @@
+# Construit l'appli sur un Mac de GitHub, la lance dans un iPhone simulé, passe les tests et garde les captures.
+name: Appli iPhone
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  construire-et-tester:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode
+        run: xcodebuild -version
+
+      - name: Projet (XcodeGen)
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Choisir un iPhone simulé
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, re, sys
+          d = json.load(sys.stdin)["devices"]
+          ios = sorted((k for k in d if "iOS" in k), key=lambda k: [int(x) for x in re.findall(r"\d+", k)])
+          print(next(x["udid"] for k in reversed(ios) for x in d[k] if x["name"].startswith("iPhone")))')
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices | grep "$UDID"
+
+      - name: Construire et tester
+        run: |
+          set -o pipefail
+          xcodebuild test -project ChiourimBA.xcodeproj -scheme ChiourimBA \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -resultBundlePath resultats.xcresult CODE_SIGNING_ALLOWED=NO 2>&1 | tail -150
+
+      - name: Extraire les captures
+        if: always()
+        run: xcrun xcresulttool export attachments --path resultats.xcresult --output-path captures || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultats-iphone
+          path: |
+            captures
+            resultats.xcresult
+          retention-days: 14
