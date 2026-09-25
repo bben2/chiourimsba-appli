@@ -392,15 +392,21 @@ enum HTMLSimple {
 }
 
 enum MesureSVG {
+    /// Largeur / hauteur du viewBox. Défaut 1,6 si le SVG n'en a pas.
     static func ratio(_ svg: String) -> CGFloat {
+        guard let boite = boite(svg), boite.width > 0, boite.height > 0 else { return 1.6 }
+        return boite.width / boite.height
+    }
+
+    static func boite(_ svg: String) -> CGSize? {
         guard let expression = try? NSRegularExpression(pattern: "viewBox\\s*=\\s*[\"']\\s*[-0-9.]+\\s+[-0-9.]+\\s+([0-9.]+)\\s+([0-9.]+)\\s*[\"']"),
               let trouve = expression.firstMatch(in: svg, range: NSRange(svg.startIndex..., in: svg)),
               let plageL = Range(trouve.range(at: 1), in: svg),
               let plageH = Range(trouve.range(at: 2), in: svg),
               let largeur = Double(svg[plageL]),
               let hauteur = Double(svg[plageH]),
-              largeur > 0, hauteur > 0 else { return 1.6 }
-        return CGFloat(largeur / hauteur)
+              largeur > 0, hauteur > 0 else { return nil }
+        return CGSize(width: largeur, height: hauteur)
     }
 }
 
