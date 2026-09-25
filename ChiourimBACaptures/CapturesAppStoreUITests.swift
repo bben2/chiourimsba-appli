@@ -2,6 +2,7 @@ import UIKit
 import XCTest
 
 /// Captures App Store. Schéma séparé : n'entre pas dans les tests du schéma ChiourimBA.
+/// Les pièces jointes conservées sont exportées ensuite dans app_ios/captures.
 @MainActor
 final class CapturesAppStoreUITests: XCTestCase {
     private var application: XCUIApplication!
