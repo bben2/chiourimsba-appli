@@ -16,30 +16,30 @@ struct ListeOeuvresView: View {
     @Environment(MagasinTextes.self) private var magasin
     @State private var recherche = ""
     @State private var safari: LienExterne?
-    @ScaledMetric(relativeTo: .largeTitle) private var tailleTitre: CGFloat = 34
+    @Environment(\.horizontalSizeClass) private var classe
 
     var body: some View {
         let collection = magasin.collection(collectionID)
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text(collection?.titre ?? titreSecours)
-                    .font(Polices.titre(tailleTitre))
-                    .foregroundStyle(Theme.bleu)
-                    .accessibilityAddTraits(.isHeader)
-
-                if collectionID != "halakha" {
-                    champRecherche
-                }
-
+            VStack(alignment: .leading, spacing: 18) {
+                EnteteSite(
+                    hebreu: collection?.titreHe ?? hebreuSecours,
+                    titre: collection?.titre ?? titreSecours,
+                    sousTitre: Libelles.sousTitreCollection(collectionID),
+                    pastille: pastille(collection)
+                )
+                champRecherche
                 contenu(collection)
             }
             .padding(.horizontal, 20)
             .padding(.top, 8)
-            .padding(.bottom, 24)
+            .padding(.bottom, 28)
+            .largeurSite(1040)
         }
         .background(Theme.fond)
+        .navigationTitle(collection?.titre ?? titreSecours)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .navigationBar)
+        .toolbar(classe == .regular ? .visible : .hidden, for: .navigationBar)
         .navigationDestination(for: RouteSommaire.self) { route in
             SommaireView(collectionID: route.collectionID, oeuvreID: route.oeuvreID)
         }
@@ -61,20 +61,44 @@ struct ListeOeuvresView: View {
         }
     }
 
+    private var hebreuSecours: String {
+        switch collectionID {
+        case "guemara": return "גמרא"
+        case "hassidout": return "חסידות ומוסר"
+        case "halakha": return "הלכה"
+        default: return ""
+        }
+    }
+
+    private func pastille(_ collection: CollectionDonnees?) -> String? {
+        guard let collection, !collection.oeuvres.isEmpty else { return nil }
+        let unites = collection.oeuvres.reduce(0) { $0 + $1.unites.count }
+        return "\(Libelles.compteOeuvres(collection.oeuvres.count, collection: collectionID)) · \(Libelles.compteUnites(unites, collection: collectionID))"
+    }
+
     private var champRecherche: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(Theme.gris)
                 .accessibilityHidden(true)
-            TextField(collectionID == "guemara" ? "Chercher un traité ou un daf" : "Chercher un livre", text: $recherche)
+            TextField(placeholderRecherche, text: $recherche)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .font(.body)
         }
         .padding(.horizontal, 12)
         .frame(height: 44)
-        .background(Theme.champ, in: RoundedRectangle(cornerRadius: 12))
+        .background(Theme.papier, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.filet, lineWidth: 1))
         .accessibilityElement(children: .combine)
+    }
+
+    private var placeholderRecherche: String {
+        switch collectionID {
+        case "guemara": return "Chercher un traité ou un daf"
+        case "halakha": return "Chercher un ouvrage ou un siman"
+        default: return "Chercher un livre"
+        }
     }
 
     @ViewBuilder
@@ -129,53 +153,48 @@ struct ListeOeuvresView: View {
     private func section(titre: String, oeuvres: [Oeuvre]) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(titre)
-                .font(.system(size: 13, weight: .semibold))
-                .tracking(1.1)
-                .textCase(.uppercase)
-                .foregroundStyle(Theme.gris)
-                .padding(.top, 4)
+                .font(.system(size: classe == .regular ? 20 : 18, weight: .semibold))
+                .foregroundStyle(Theme.bleu)
+                .padding(.top, 8)
                 .accessibilityAddTraits(.isHeader)
             liste(oeuvres)
         }
     }
 
     private func liste(_ oeuvres: [Oeuvre]) -> some View {
-        VStack(spacing: 0) {
-            ForEach(Array(oeuvres.enumerated()), id: \.element.id) { index, oeuvre in
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 260), spacing: 13)], spacing: 13) {
+            ForEach(oeuvres) { oeuvre in
                 NavigationLink(value: RouteSommaire(collectionID: collectionID, oeuvreID: oeuvre.id)) {
-                    ligne(oeuvre, premiere: index == 0)
+                    ligne(oeuvre)
                 }
                 .buttonStyle(StylePlein())
             }
         }
-        .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.filet, lineWidth: 1))
     }
 
-    private func ligne(_ oeuvre: Oeuvre, premiere: Bool) -> some View {
-        HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
+    private func ligne(_ oeuvre: Oeuvre) -> some View {
+        CarteSite {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(oeuvre.titreHe)
+                        .font(Polices.hebreu(20))
+                        .foregroundStyle(Theme.or)
+                        .environment(\.layoutDirection, .rightToLeft)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    if magasin.pretsHorsLigne.contains(oeuvre.id) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.vert)
+                            .accessibilityLabel("Lisible hors ligne")
+                    }
+                }
                 Text(oeuvre.titre)
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(size: 17, weight: .semibold))
                     .foregroundStyle(Theme.encre)
                 Text(detail(oeuvre))
                     .font(.system(size: 13))
                     .foregroundStyle(Theme.gris)
             }
-            Spacer(minLength: 0)
-            TexteJustifie(texte: oeuvre.titreHe, police: Polices.hebreu, taille: 18, rtl: true, etirer: false, teinte: "Or")
-            if magasin.pretsHorsLigne.contains(oeuvre.id) {
-                Image(systemName: "checkmark")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(Theme.vert)
-                    .accessibilityLabel("Lisible hors ligne")
-            }
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 11)
-        .frame(minHeight: 44)
-        .overlay(alignment: .top) {
-            if !premiere { Rectangle().fill(Theme.filet).frame(height: 1) }
         }
         .accessibilityElement(children: .combine)
     }

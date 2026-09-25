@@ -6,6 +6,7 @@ struct ReglagesView: View {
     @AppStorage(ReglagesLocaux.cleEchelle) private var echelle = 1.0
     @AppStorage(ReglagesLocaux.cleDisposition) private var dispositionBrute = DispositionTexte.auto.rawValue
     @AppStorage(ReglagesLocaux.cleMaj) private var misesAJour = true
+    @AppStorage(ReglagesLocaux.cleApparence) private var apparenceBrute = Apparence.papier.rawValue
     @State private var confirmerVidage = false
     @State private var espace: (total: Int64, details: [(nom: String, octets: Int64)]) = (0, [])
 
@@ -33,6 +34,26 @@ struct ReglagesView: View {
                         .foregroundStyle(Theme.rouge)
                         .frame(maxWidth: .infinity, minHeight: 44)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.rouge, lineWidth: 1))
+                }
+                .padding(16)
+                .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.filet, lineWidth: 1))
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Apparence")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Theme.encre)
+                    Text("Papier est le fond crème des sites, même si l'appareil est en mode sombre.")
+                        .font(.system(size: 13))
+                        .foregroundStyle(Theme.gris)
+                    Picker("Apparence", selection: $apparenceBrute) {
+                        ForEach(Apparence.allCases) { mode in
+                            Text(mode.titre).tag(mode.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(minHeight: 44)
+                    .accessibilityLabel("Apparence")
                 }
                 .padding(16)
                 .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
@@ -89,6 +110,7 @@ struct ReglagesView: View {
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
+            .largeurSite(720)
         }
         .background(Theme.fond)
         .navigationBarBackButtonHidden(true)

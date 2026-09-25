@@ -7,6 +7,7 @@ struct EspaceView: View {
     @Query private var favoris: [Favori]
     @Query private var annotations: [AnnotationLocale]
     @State private var signalements: [EntreeSignalement] = []
+    @Environment(\.horizontalSizeClass) private var classe
 
     var body: some View {
         ScrollView {
@@ -78,10 +79,12 @@ struct EspaceView: View {
             .padding(.horizontal, 20)
             .padding(.top, 8)
             .padding(.bottom, 24)
+            .largeurSite(1040)
         }
         .background(Theme.fond)
+        .navigationTitle("Mon espace")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .navigationBar)
+        .toolbar(classe == .regular ? .visible : .hidden, for: .navigationBar)
         .onAppear { signalements = FileSignalements.standard().lire() }
     }
 

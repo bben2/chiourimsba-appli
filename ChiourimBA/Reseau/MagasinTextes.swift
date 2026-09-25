@@ -31,8 +31,32 @@ final class NavigationApp {
     var onglet = OngletApp.chiourim
 }
 
-enum OngletApp: Hashable {
+enum OngletApp: String, Hashable, CaseIterable, Identifiable {
     case chiourim, guemara, hassidout, halakha, espace
+
+    var id: String { rawValue }
+
+    static var tous: [OngletApp] { allCases }
+
+    var titre: String {
+        switch self {
+        case .chiourim: return "Chiourim"
+        case .guemara: return "Guemara"
+        case .hassidout: return "Hassidout"
+        case .halakha: return "Halakha"
+        case .espace: return "Mon espace"
+        }
+    }
+
+    var symbole: String {
+        switch self {
+        case .chiourim: return "house"
+        case .guemara: return "book"
+        case .hassidout: return "flame"
+        case .halakha: return "scalemass"
+        case .espace: return "bookmark"
+        }
+    }
 }
 
 @MainActor

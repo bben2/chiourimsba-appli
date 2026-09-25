@@ -99,10 +99,22 @@ enum Libelles {
     }
 
     static func compteUnites(_ n: Int, collection: String) -> String {
-        if collection == "hassidout" || collection == "halakha" {
+        if collection == "hassidout" {
             return n == 1 ? "1 section" : "\(n) sections"
         }
+        if collection == "halakha" {
+            return n == 1 ? "1 siman" : "\(n) simanim"
+        }
         return n == 1 ? "1 feuillet" : "\(n) feuillets"
+    }
+
+    /// Halakha : « Siman 1 » pour l'unité `001`. Les autres collections gardent le code brut (`2a`, `001`).
+    static func libelleUnite(_ unite: String, collection: String) -> String {
+        guard collection == "halakha" else { return unite }
+        if let numero = Int(unite) {
+            return "Siman \(numero)"
+        }
+        return "Siman \(unite)"
     }
 
     static func sousTitreCollection(_ id: String) -> String {

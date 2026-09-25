@@ -23,6 +23,7 @@ struct LectureView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.horizontalSizeClass) private var classe
     @Environment(\.verticalSizeClass) private var classeVerticale
+    private var facteur: CGFloat { classe == .regular ? 1.12 : 1 }
     @Environment(\.modelContext) private var contexte
     @Query private var favoris: [Favori]
     @Query private var annotations: [AnnotationLocale]
@@ -46,9 +47,11 @@ struct LectureView: View {
             contenu
             barreBas
         }
-        .background(Theme.papier)
-        .navigationBarBackButtonHidden(true)
-        .toolbar(.hidden, for: .navigationBar)
+        .background(Theme.fond)
+        .navigationTitle(oeuvre?.titre ?? unite)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(classe != .regular)
+        .toolbar(classe == .regular ? .visible : .hidden, for: .navigationBar)
         .task(id: uniteCourante) { await charger() }
         .sheet(item: cibleFeuille) { cible in
             FeuilleAnnotation(
@@ -128,7 +131,9 @@ struct LectureView: View {
 
     private var barreHaut: some View {
         HStack(spacing: 0) {
-            BoutonRetour(titre: oeuvre?.titre ?? "Retour") { sauverPosition(); dismiss() }
+            if classe != .regular {
+                BoutonRetour(titre: oeuvre?.titre ?? "Retour") { sauverPosition(); dismiss() }
+            }
             Spacer(minLength: 0)
             Button {
                 echelle = max(0.85, echelle - 0.05)
@@ -181,15 +186,30 @@ struct LectureView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         } else if let page {
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 18) {
-                    Text(titreAffiche(page))
-                        .font(Polices.titre(25))
-                        .foregroundStyle(Theme.bleu)
-                        .accessibilityAddTraits(.isHeader)
+                LazyVStack(alignment: .leading, spacing: 12) {
+                    VStack(spacing: 4) {
+                        Text(titreAffiche(page))
+                            .font(Polices.titre(classe == .regular ? 30 : 26))
+                            .foregroundStyle(Theme.encre)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                            .accessibilityAddTraits(.isHeader)
+                        if !page.ref.isEmpty, !titreAffiche(page).contains(page.ref) {
+                            Text(page.ref)
+                                .font(.system(size: 15))
+                                .foregroundStyle(Theme.gris)
+                        }
+                    }
+                    .padding(.bottom, 12)
+                    .overlay(alignment: .bottom) { Rectangle().fill(Theme.filet).frame(height: 2) }
                     if let resume = page.resume, !resume.isEmpty {
                         Text(resume)
-                            .font(.subheadline)
-                            .foregroundStyle(Theme.gris)
+                            .font(.system(size: classe == .regular ? 17 : 16))
+                            .foregroundStyle(Theme.encre)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(16)
+                            .background(Theme.papier, in: RoundedRectangle(cornerRadius: 12))
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.filet, lineWidth: 1))
                     }
                     ForEach(Array(page.segments.enumerated()), id: \.offset) { index, segment in
                         bloc(segment, index: index)
@@ -197,6 +217,9 @@ struct LectureView: View {
                     }
                     ForEach(Array(page.schemas.enumerated()), id: \.offset) { _, schema in
                         BoiteSchema(schema: schema)
+                            .padding(14)
+                            .background(Theme.papier, in: RoundedRectangle(cornerRadius: 12))
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.filet, lineWidth: 1))
                     }
                     if collectionID == "guemara" {
                         // Licence CC BY-NC du texte Koren : la citation est obligatoire.
@@ -210,6 +233,7 @@ struct LectureView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 18)
+                .largeurSite(720)
                 .scrollTargetLayout()
             }
             .scrollPosition(id: positionDefilement, anchor: .top)
@@ -237,14 +261,25 @@ struct LectureView: View {
     private func bloc(_ segment: Segment, index: Int) -> some View {
         let surligne = annotations.contains { $0.collectionID == collectionID && $0.oeuvreID == oeuvreID && $0.unite == unite && $0.indexSegment == index && $0.surlignage }
         return VStack(alignment: .leading, spacing: 12) {
-            if coteACote {
-                HStack(alignment: .top, spacing: 16) {
-                    texteFR(segment.fr, surligne: surligne)
-                    texteHE(segment.he)
+            HStack(alignment: .top, spacing: 12) {
+                Text("\(index + 1)")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Theme.papier)
+                    .frame(width: 26, height: 26)
+                    .background(Theme.encre, in: Circle())
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 10) {
+                    if coteACote {
+                        HStack(alignment: .top, spacing: 22) {
+                            texteFR(segment.fr, surligne: surligne)
+                            texteHE(segment.he)
+                        }
+                    } else {
+                        texteHE(segment.he)
+                        Rectangle().fill(Theme.filet).frame(height: 1).opacity(0.8)
+                        texteFR(segment.fr, surligne: surligne)
+                    }
                 }
-            } else {
-                texteHE(segment.he)
-                texteFR(segment.fr, surligne: surligne)
             }
             if !segment.rashi.isEmpty {
                 gloses("Rachi", segment.rashi, fond: Theme.fond, grise: false)
@@ -257,7 +292,7 @@ struct LectureView: View {
             }
             if let explication = segment.explication, !explication.isEmpty {
                 DisclosureGroup {
-                    Text(HTMLSimple.attribue(explication, taille: tailleFR * echelle))
+                    Text(HTMLSimple.attribue(explication, taille: tailleFR * echelle * facteur))
                         .foregroundStyle(Theme.encre)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 6)
@@ -275,21 +310,24 @@ struct LectureView: View {
                 BoiteSchema(schema: schema)
             }
             Button("Annoter ou signaler") { feuille = index }
-                .font(.subheadline.weight(.semibold))
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Theme.bleu)
                 .frame(minHeight: 44)
         }
-        .padding(.vertical, 4)
+        .padding(14)
+        .background(Theme.papier, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.filet, lineWidth: 1))
         .onLongPressGesture(minimumDuration: 0.45) { feuille = index }
         .accessibilityHint("Maintenez appuyé pour annoter ou signaler")
         .accessibilityAction(named: "Annoter ou signaler") { feuille = index }
     }
 
     private func texteHE(_ texte: String) -> some View {
-        TexteJustifie(texte: texte, police: Polices.hebreu, taille: tailleHE * echelle, rtl: true)
+        TexteJustifie(texte: texte, police: Polices.hebreu, taille: tailleHE * echelle * facteur, rtl: true)
     }
 
     private func texteFR(_ texte: String, surligne: Bool) -> some View {
-        TexteJustifie(texte: texte, police: Polices.garamond, taille: tailleFR * echelle, rtl: false)
+        TexteJustifie(texte: texte, police: Polices.francais, taille: tailleFR * echelle * facteur, rtl: false)
             .padding(.horizontal, surligne ? 4 : 0)
             .background(surligne ? Theme.surbrillance : Color.clear)
     }
@@ -301,14 +339,14 @@ struct LectureView: View {
                 ForEach(Array(gloses.enumerated()), id: \.offset) { _, glose in
                     VStack(alignment: .leading, spacing: 6) {
                         if let dh = glose.dh, !dh.isEmpty {
-                            TexteJustifie(texte: dh, police: Polices.hebreuGras, taille: tailleHE * echelle * 0.82, rtl: true)
+                            TexteJustifie(texte: dh, police: Polices.hebreuGras, taille: tailleHE * echelle * facteur * 0.82, rtl: true)
                                 .accessibilityLabel("Mot d'entrée \(dh)")
                         }
                         if let he = glose.he, !he.isEmpty {
-                            TexteJustifie(texte: he, police: Polices.hebreu, taille: tailleHE * echelle * 0.82, rtl: true)
+                            TexteJustifie(texte: he, police: Polices.hebreu, taille: tailleHE * echelle * facteur * 0.82, rtl: true)
                         }
                         if let fr = glose.fr, !fr.isEmpty {
-                            TexteJustifie(texte: fr, police: Polices.garamond, taille: tailleFR * echelle * 0.92, rtl: false)
+                            TexteJustifie(texte: fr, police: Polices.francais, taille: tailleFR * echelle * facteur * 0.92, rtl: false)
                         }
                     }
                 }
@@ -328,32 +366,33 @@ struct LectureView: View {
 
     private var barreBas: some View {
         HStack {
-            Button {
-                aller(-1)
-            } label: {
-                Text("‹ Précédent")
-                    .frame(minHeight: 44)
-            }
-            .disabled(indexUnite <= 0 || unites.isEmpty)
-            Spacer()
+            pastilleNav("‹ Précédent", actif: indexUnite > 0 && !unites.isEmpty) { aller(-1) }
+            Spacer(minLength: 8)
             Text(horsLigne ? "Lisible hors ligne" : "En ligne")
                 .font(.system(size: 13))
                 .foregroundStyle(horsLigne ? Theme.vert : Theme.gris)
-            Spacer()
-            Button {
-                aller(1)
-            } label: {
-                Text(titreSuivant)
-                    .frame(minHeight: 44)
-            }
-            .disabled(unites.isEmpty || indexUnite >= unites.count - 1)
+            Spacer(minLength: 8)
+            pastilleNav(titreSuivant, actif: !unites.isEmpty && indexUnite < unites.count - 1) { aller(1) }
         }
-        .font(.body)
-        .foregroundStyle(Theme.bleu)
-        .padding(.horizontal, 12)
-        .padding(.bottom, 8)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
         .background(Theme.fond)
         .overlay(alignment: .top) { Rectangle().fill(Theme.filet).frame(height: 1) }
+    }
+
+    private func pastilleNav(_ titre: String, actif: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(titre)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Theme.encre)
+                .padding(.horizontal, 14)
+                .frame(minHeight: 44)
+                .background(Theme.papier, in: Capsule())
+                .overlay(Capsule().stroke(Theme.filet, lineWidth: 1))
+        }
+        .disabled(!actif)
+        .opacity(actif ? 1 : 0.28)
+        .buttonStyle(StylePlein())
     }
 
     private var titreSuivant: String {

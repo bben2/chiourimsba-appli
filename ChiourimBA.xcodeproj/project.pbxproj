@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0090C062543F060AF9305CF4 /* EBGaramond_OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CAFE112B9831909D3B973 /* EBGaramond_OFL.txt */; };
 		135EE5653BE0E06207769D2D /* ListeOeuvresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4132078B01E0B24150D9BE86 /* ListeOeuvresView.swift */; };
+		1456B3197742BE7B0D279A86 /* catalogue-halakha.json in Resources */ = {isa = PBXBuildFile; fileRef = 79C491868B923DC23936C992 /* catalogue-halakha.json */; };
 		1A9D2D7B320E3CA0EB89D5A5 /* PageTexte.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87544CED637F88B8D314E8D9 /* PageTexte.swift */; };
 		245379007D06DF873B69BA2F /* EspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AFBF493E1A730689B6D2A9 /* EspaceView.swift */; };
 		30A6A8DAC52936AE42AD4459 /* ModelesLocaux.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264EB9AEBEF416020094615E /* ModelesLocaux.swift */; };
@@ -24,6 +25,7 @@
 		5E3584B7FBD52614FB91A0D5 /* StylePlein.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80EC1029AD113331E1B5197 /* StylePlein.swift */; };
 		6B608E5BD9F808700AE1994C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EF7D465D2EA1DB249F0177 /* Theme.swift */; };
 		723BFC2865B3C4837FA404F7 /* FrankRuhlLibre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63AD0AC6287A6DDA0E24A3C1 /* FrankRuhlLibre.ttf */; };
+		7BE9CA737283BF076F27EC3A /* kitsour-001.json in Resources */ = {isa = PBXBuildFile; fileRef = B8CA2AD77E9992E1AD019E5C /* kitsour-001.json */; };
 		7BF6F2E5A75CB05BAEB57569 /* ParcoursLectureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4323A40811CAF7761D54E /* ParcoursLectureUITests.swift */; };
 		85F2564F180854947B4349DC /* FeuilleAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2222F61C3B2EE6039441ADF /* FeuilleAnnotation.swift */; };
 		9B1F93C23FDC6EFB58F45006 /* LecteurNatifTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C34A87E760DED9889D1BD27 /* LecteurNatifTests.swift */; };
@@ -69,12 +71,14 @@
 		66B87DA29899998AE9AB7996 /* FrankRuhlLibre_OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FrankRuhlLibre_OFL.txt; sourceTree = "<group>"; };
 		66E89864625DCC8339B5D6AB /* LectureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureView.swift; sourceTree = "<group>"; };
 		722AA70949D96F5E2BFF7F78 /* ChiourimBA.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ChiourimBA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79C491868B923DC23936C992 /* catalogue-halakha.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "catalogue-halakha.json"; sourceTree = "<group>"; };
 		79CEC0E873A631F6FB5214DD /* AccueilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccueilView.swift; sourceTree = "<group>"; };
 		7F8CAFE112B9831909D3B973 /* EBGaramond_OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = EBGaramond_OFL.txt; sourceTree = "<group>"; };
 		87544CED637F88B8D314E8D9 /* PageTexte.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTexte.swift; sourceTree = "<group>"; };
 		87C1A5F963605F6D7EB4B533 /* ChiourimBATests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ChiourimBATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8902ACC61EE265A57ED219FE /* EBGaramond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EBGaramond.ttf; sourceTree = "<group>"; };
 		8B96B965EF01FD0F43DAED71 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B8CA2AD77E9992E1AD019E5C /* kitsour-001.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "kitsour-001.json"; sourceTree = "<group>"; };
 		C2222F61C3B2EE6039441ADF /* FeuilleAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeuilleAnnotation.swift; sourceTree = "<group>"; };
 		CE6FBC8E48E89DA8AC3C65D1 /* Signalements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signalements.swift; sourceTree = "<group>"; };
 		D80EC1029AD113331E1B5197 /* StylePlein.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylePlein.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 		F8CD1FA5CE2E923E47A5B8AA /* ChiourimBATests */ = {
 			isa = PBXGroup;
 			children = (
+				79C491868B923DC23936C992 /* catalogue-halakha.json */,
+				B8CA2AD77E9992E1AD019E5C /* kitsour-001.json */,
 				0C34A87E760DED9889D1BD27 /* LecteurNatifTests.swift */,
 			);
 			path = ChiourimBATests;
@@ -221,6 +227,7 @@
 			buildConfigurationList = 7BC5A498972E42A1B0BB20B1 /* Build configuration list for PBXNativeTarget "ChiourimBATests" */;
 			buildPhases = (
 				7D23D57189C55C9DC63AB035 /* Sources */,
+				FECA5BFEAAB01696A0006CE9 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -308,6 +315,15 @@
 				723BFC2865B3C4837FA404F7 /* FrankRuhlLibre.ttf in Resources */,
 				44286A4EB20475D92C77A802 /* FrankRuhlLibre_OFL.txt in Resources */,
 				EF1C23404D94D084181BB633 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FECA5BFEAAB01696A0006CE9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1456B3197742BE7B0D279A86 /* catalogue-halakha.json in Resources */,
+				7BE9CA737283BF076F27EC3A /* kitsour-001.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

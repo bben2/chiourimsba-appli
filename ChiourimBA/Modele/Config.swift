@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 /// Interrupteurs tenus à l'écart du compilateur : lus dans l'Info.plist, absents donc faux / vides.
 enum Config {
@@ -96,11 +97,37 @@ enum SourceDonnees {
     }
 }
 
+enum Apparence: String, CaseIterable, Identifiable {
+    case papier
+    case nuit
+    case systeme
+
+    var id: String { rawValue }
+
+    var titre: String {
+        switch self {
+        case .papier: return "Papier"
+        case .nuit: return "Nuit"
+        case .systeme: return "Système"
+        }
+    }
+
+    /// Papier reste crème même si l'appareil est en mode sombre.
+    var schema: ColorScheme? {
+        switch self {
+        case .papier: return .light
+        case .nuit: return .dark
+        case .systeme: return nil
+        }
+    }
+}
+
 enum ReglagesLocaux {
     static let cleEchelle = "echelleTexte"
     static let cleDisposition = "dispositionTexte"
     static let cleMaj = "misesAJourAuto"
     static let cleVerification = "derniereVerification"
+    static let cleApparence = "apparence"
 
     static var misesAJourAuto: Bool {
         if UserDefaults.standard.object(forKey: cleMaj) == nil { return true }

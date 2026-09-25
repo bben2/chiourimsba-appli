@@ -7,14 +7,16 @@ struct SommaireView: View {
     @Environment(MagasinTextes.self) private var magasin
     @Environment(\.dismiss) private var dismiss
     @Query private var lues: [UniteLue]
-    @ScaledMetric(relativeTo: .largeTitle) private var tailleTitre: CGFloat = 34
+    @Environment(\.horizontalSizeClass) private var classe
 
     private var oeuvre: Oeuvre? { magasin.oeuvre(collection: collectionID, id: oeuvreID) }
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
-                BoutonRetour(titre: titreParent) { dismiss() }
+            VStack(alignment: .leading, spacing: 16) {
+                if classe != .regular {
+                    BoutonRetour(titre: titreParent) { dismiss() }
+                }
                 entete
                 carteTelechargement
                 if let oeuvre {
@@ -26,11 +28,14 @@ struct SommaireView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.bottom, 24)
+            .padding(.bottom, 28)
+            .largeurSite(1040)
         }
         .background(Theme.fond)
-        .navigationBarBackButtonHidden(true)
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle(oeuvre?.titre ?? titreParent)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(classe != .regular)
+        .toolbar(classe == .regular ? .visible : .hidden, for: .navigationBar)
         .navigationDestination(for: RouteLecture.self) { route in
             LectureView(collectionID: route.collectionID, oeuvreID: route.oeuvreID, unite: route.unite, indexInitial: 0)
         }
@@ -48,24 +53,12 @@ struct SommaireView: View {
     @ViewBuilder
     private var entete: some View {
         if let oeuvre {
-            HStack(alignment: .bottom) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(oeuvre.titre)
-                        .font(Polices.titre(tailleTitre))
-                        .foregroundStyle(Theme.bleu)
-                        .accessibilityAddTraits(.isHeader)
-                    Text(Libelles.compteUnites(oeuvre.unites.count, collection: collectionID))
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.gris)
-                    if let auteur = oeuvre.auteur, !auteur.isEmpty {
-                        Text(auteur)
-                            .font(.subheadline)
-                            .foregroundStyle(Theme.gris)
-                    }
-                }
-                Spacer(minLength: 8)
-                TexteJustifie(texte: oeuvre.titreHe, police: Polices.hebreu, taille: 30, rtl: true, etirer: false, teinte: "Or")
-            }
+            EnteteSite(
+                hebreu: oeuvre.titreHe,
+                titre: oeuvre.titre,
+                sousTitre: oeuvre.auteur ?? "",
+                pastille: Libelles.compteUnites(oeuvre.unites.count, collection: collectionID)
+            )
         }
     }
 
@@ -115,25 +108,32 @@ struct SommaireView: View {
     }
 
     private func grille(_ oeuvre: Oeuvre) -> some View {
-        let colonnes = Array(repeating: GridItem(.flexible(), spacing: 6), count: 6)
+        let halakha = collectionID == "halakha"
+        let colonnes = halakha
+            ? [GridItem(.adaptive(minimum: 108), spacing: 8)]
+            : Array(repeating: GridItem(.flexible(), spacing: 6), count: 6)
         return VStack(alignment: .leading, spacing: 8) {
-            Text(collectionID == "guemara" ? "Feuillets" : "Sections")
-                .font(Polices.titre(20))
-                .foregroundStyle(Theme.encre)
+            Text(halakha ? "Simanim" : (collectionID == "guemara" ? "Feuillets" : "Sections"))
+                .font(.system(size: classe == .regular ? 20 : 18, weight: .semibold))
+                .foregroundStyle(Theme.bleu)
                 .accessibilityAddTraits(.isHeader)
-            LazyVGrid(columns: colonnes, spacing: 6) {
+            LazyVGrid(columns: colonnes, spacing: 8) {
                 ForEach(oeuvre.unites, id: \.self) { unite in
+                    let libelle = Libelles.libelleUnite(unite, collection: collectionID)
                     NavigationLink(value: RouteLecture(collectionID: collectionID, oeuvreID: oeuvre.id, unite: unite)) {
                         let lue = lues.contains { $0.cle == "\(oeuvre.id)/\(unite)" }
-                        Text(unite)
-                            .font(.system(size: 15, weight: .semibold))
+                        Text(libelle)
+                            .font(.system(size: halakha ? 15 : 15, weight: .semibold))
                             .foregroundStyle(lue ? Theme.encreInverse : Theme.encre)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                             .frame(maxWidth: .infinity, minHeight: 44)
                             .background(lue ? Theme.bleu : Theme.papier, in: RoundedRectangle(cornerRadius: 10))
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.filet, lineWidth: 1))
                     }
                     .buttonStyle(StylePlein())
-                    .accessibilityLabel(unite)
+                    .accessibilityLabel(libelle)
+                    .accessibilityIdentifier(unite)
                     .accessibilityAddTraits(lues.contains { $0.cle == "\(oeuvre.id)/\(unite)" } ? .isSelected : [])
                 }
             }

@@ -60,6 +60,27 @@ final class DecodageDonneesTests: XCTestCase {
         XCTAssertGreaterThan(texte.runs.count, 1)
     }
 
+    func testHalakhaExemple() throws {
+        let bundle = Bundle(for: DecodageDonneesTests.self)
+        let catalogueURL = try XCTUnwrap(bundle.url(forResource: "catalogue-halakha", withExtension: "json"))
+        let catalogue = try ClientDonnees.decoderCatalogue(Data(contentsOf: catalogueURL))
+        let kitsour = try XCTUnwrap(catalogue.oeuvre(collection: "halakha", id: "kitsour"))
+        XCTAssertEqual(kitsour.titre, "Kitsour Choulhan Aroukh")
+        XCTAssertEqual(kitsour.unites, ["001", "003"])
+        XCTAssertEqual(Libelles.libelleUnite("001", collection: "halakha"), "Siman 1")
+        XCTAssertEqual(Libelles.libelleUnite("003", collection: "halakha"), "Siman 3")
+        XCTAssertEqual(Libelles.libelleUnite("2a", collection: "guemara"), "2a")
+        XCTAssertEqual(Libelles.compteUnites(2, collection: "halakha"), "2 simanim")
+
+        let pageURL = try XCTUnwrap(bundle.url(forResource: "kitsour-001", withExtension: "json"))
+        let page = try ClientDonnees.decoderPage(Data(contentsOf: pageURL))
+        XCTAssertEqual(page.ref, "Siman 1")
+        XCTAssertEqual(page.titre, "Kitsour Choulhan Aroukh — Siman 1")
+        XCTAssertFalse(page.resume?.isEmpty ?? true)
+        XCTAssertEqual(page.segments.first?.fr, "Je place constamment.")
+        XCTAssertFalse(page.segments.first?.he.isEmpty ?? true)
+    }
+
     func testPolicesEmbarquees() {
         XCTAssertNotNil(UIFont(name: "EBGaramond-SemiBold", size: 17))
         XCTAssertNotNil(UIFont(name: "EBGaramond-Regular", size: 17))

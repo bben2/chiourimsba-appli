@@ -7,6 +7,9 @@ final class ParcoursLectureUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         application = XCUIApplication()
+        // Le catalogue public n'a pas encore la Halakha : sur le simulateur, les fichiers
+        // déjà générés dans le dossier de développement priment (SIMULATOR_HOST_HOME).
+        application.launchEnvironment["SIMULATOR_HOST_HOME"] = NSHomeDirectory()
         application.launch()
     }
 
@@ -52,6 +55,28 @@ final class ParcoursLectureUITests: XCTestCase {
 
         let ancre = application.buttons["Annoter ou signaler"]
         XCTAssertTrue(ancre.waitForExistence(timeout: 90), "La section hassidout ne s'est pas ouverte")
+        XCTAssertEqual(application.state, .runningForeground)
+    }
+
+    func testLectureHalakhaKitsour() throws {
+        let halakha = application.tabBars.buttons["Halakha"]
+        XCTAssertTrue(halakha.waitForExistence(timeout: 30), "L'onglet Halakha est absent")
+        halakha.tap()
+
+        let kitsour = application.buttons.containing(NSPredicate(format: "label CONTAINS %@", "Kitsour")).firstMatch
+        XCTAssertTrue(kitsour.waitForExistence(timeout: 90), "Kitsour introuvable")
+        rendreVisible(kitsour)
+        kitsour.tap()
+
+        let siman = application.buttons["001"]
+        let libelle = application.buttons["Siman 1"]
+        let cible = siman.waitForExistence(timeout: 20) ? siman : libelle
+        XCTAssertTrue(cible.waitForExistence(timeout: 30), "Le siman 001 est absent")
+        rendreVisible(cible)
+        cible.tap()
+
+        let ancre = application.buttons["Annoter ou signaler"]
+        XCTAssertTrue(ancre.waitForExistence(timeout: 90), "Le siman 001 ne s'est pas ouvert")
         XCTAssertEqual(application.state, .runningForeground)
     }
 

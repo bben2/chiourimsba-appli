@@ -22,46 +22,73 @@ struct ChiourimBAApp: App {
                     await SignalementService.retenter(FileSignalements.standard())
                 }
         }
+        .defaultSize(width: 1200, height: 800)
     }
 }
 
 struct RacineView: View {
     @Environment(NavigationApp.self) private var navigation
+    @Environment(\.horizontalSizeClass) private var classe
+    @AppStorage(ReglagesLocaux.cleApparence) private var apparenceBrute = Apparence.papier.rawValue
 
     var body: some View {
         @Bindable var navigation = navigation
-        TabView(selection: $navigation.onglet) {
-            NavigationStack {
+        Group {
+            if classe == .regular {
+                NavigationSplitView {
+                    List(selection: selectionLaterale) {
+                        ForEach(OngletApp.tous) { onglet in
+                            Label(onglet.titre, systemImage: onglet.symbole)
+                                .tag(onglet)
+                        }
+                    }
+                    .navigationTitle("Chiourim BA")
+                    .listStyle(.sidebar)
+                    .scrollContentBackground(.hidden)
+                    .background(Theme.fond)
+                } detail: {
+                    pile(navigation.onglet)
+                }
+                .navigationSplitViewStyle(.balanced)
+                .navigationSplitViewColumnWidth(min: 220, ideal: 248, max: 300)
+            } else {
+                TabView(selection: $navigation.onglet) {
+                    ForEach(OngletApp.tous) { onglet in
+                        pile(onglet)
+                            .tabItem { Label(onglet.titre, systemImage: onglet.symbole) }
+                            .tag(onglet)
+                    }
+                }
+                .toolbarBackground(Theme.papier, for: .tabBar)
+                .toolbarBackground(.visible, for: .tabBar)
+            }
+        }
+        .background(Theme.fond)
+        .preferredColorScheme((Apparence(rawValue: apparenceBrute) ?? .papier).schema)
+    }
+
+    private var selectionLaterale: Binding<OngletApp?> {
+        Binding(
+            get: { navigation.onglet },
+            set: { if let valeur = $0 { navigation.onglet = valeur } }
+        )
+    }
+
+    @ViewBuilder
+    private func pile(_ onglet: OngletApp) -> some View {
+        NavigationStack {
+            switch onglet {
+            case .chiourim:
                 AccueilView()
-            }
-            .tabItem { Label("Chiourim", systemImage: "house") }
-            .tag(OngletApp.chiourim)
-
-            NavigationStack {
+            case .guemara:
                 ListeOeuvresView(collectionID: "guemara")
-            }
-            .tabItem { Label("Guemara", systemImage: "book") }
-            .tag(OngletApp.guemara)
-
-            NavigationStack {
+            case .hassidout:
                 ListeOeuvresView(collectionID: "hassidout")
-            }
-            .tabItem { Label("Hassidout", systemImage: "flame") }
-            .tag(OngletApp.hassidout)
-
-            NavigationStack {
+            case .halakha:
                 ListeOeuvresView(collectionID: "halakha")
-            }
-            .tabItem { Label("Halakha", systemImage: "scalemass") }
-            .tag(OngletApp.halakha)
-
-            NavigationStack {
+            case .espace:
                 EspaceView()
             }
-            .tabItem { Label("Mon espace", systemImage: "bookmark") }
-            .tag(OngletApp.espace)
         }
-        .toolbarBackground(Theme.papier, for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
     }
 }

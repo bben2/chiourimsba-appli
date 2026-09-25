@@ -11,22 +11,16 @@ struct AccueilView: View {
     @Environment(MagasinTextes.self) private var magasin
     @Environment(NavigationApp.self) private var navigation
     @Query(sort: \PositionLecture.miseAJour, order: .reverse) private var positions: [PositionLecture]
-    @ScaledMetric(relativeTo: .largeTitle) private var tailleTitre: CGFloat = 36
+    @Environment(\.horizontalSizeClass) private var classe
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Bibliothèque bilingue")
-                        .font(.system(size: 13, weight: .regular))
-                        .tracking(1.1)
-                        .textCase(.uppercase)
-                        .foregroundStyle(Theme.gris)
-                    Text("Chiourim BA")
-                        .font(Polices.titre(tailleTitre))
-                        .foregroundStyle(Theme.bleu)
-                        .accessibilityAddTraits(.isHeader)
-                }
+            VStack(alignment: .leading, spacing: 28) {
+                EnteteSite(
+                    hebreu: "שיעורים",
+                    titre: "Chiourim BA",
+                    sousTitre: "Les chiourim de la semaine, et une bibliothèque de textes traduits intégralement en français, face à l'hébreu."
+                )
 
                 if let position = positions.first {
                     NavigationLink {
@@ -43,11 +37,8 @@ struct AccueilView: View {
                     .accessibilityHint("Ouvre la dernière page lue")
                 }
 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("La bibliothèque")
-                        .font(Polices.titre(22))
-                        .foregroundStyle(Theme.encre)
-                        .accessibilityAddTraits(.isHeader)
+                VStack(alignment: .leading, spacing: 12) {
+                    enteteSection("La bibliothèque", "Trois collections, toutes bilingues hébreu-français")
                     if magasin.chargementCatalogue && magasin.catalogue == nil {
                         SqueletteLignes(nombre: 3)
                     } else if let erreur = magasin.erreurCatalogue, magasin.catalogue == nil {
@@ -60,34 +51,33 @@ struct AccueilView: View {
                             Task { await magasin.rafraichirCatalogue(force: true) }
                         }
                     } else {
-                        ForEach(idsCollections, id: \.self) { id in
-                            boutonCollection(id)
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 260), spacing: 14)], spacing: 14) {
+                            ForEach(idsCollections, id: \.self) { id in
+                                boutonCollection(id)
+                            }
                         }
                     }
                 }
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Aller plus loin")
-                        .font(Polices.titre(22))
-                        .foregroundStyle(Theme.encre)
-                        .accessibilityAddTraits(.isHeader)
+                VStack(alignment: .leading, spacing: 12) {
+                    enteteSection("Aller plus loin", "Le portail, les questions et les livres")
                     NavigationLink(value: RouteWeb(titre: "Chiourim BA", url: Config.urlPortail, discussion: false)) {
-                        ligneSimple(titre: "Chiourim BA", detail: "Les chiourim de la semaine, sur le portail")
+                        carteLien(titre: "Chiourim BA", detail: "Les chiourim de la semaine, sur le portail", or: "שיעורים")
                     }
                     .buttonStyle(StylePlein())
                     NavigationLink(value: RouteWeb(titre: "Questions à l'IA", url: Config.urlPortail, discussion: true)) {
-                        ligneSimple(titre: "Questions à l'IA", detail: "La page de discussion du portail")
+                        carteLien(titre: "Questions à l'IA", detail: "La page de discussion du portail", or: "שאלות")
                     }
                     .buttonStyle(StylePlein())
                     NavigationLink {
                         LivresView()
                     } label: {
-                        ligneSimple(titre: "Nos livres", detail: LivresPapier.liens.isEmpty ? "Bientôt" : "Les éditions imprimées")
+                        carteLien(titre: "Nos livres", detail: LivresPapier.liens.isEmpty ? "Bientôt" : "Les éditions imprimées", or: "ספרים")
                     }
                     .buttonStyle(StylePlein())
                     if let url = Config.urlDons {
                         NavigationLink(value: RouteWeb(titre: "Nous soutenir", url: url, discussion: false)) {
-                            ligneSimple(titre: "Nous soutenir", detail: "Participer aux traductions")
+                            carteLien(titre: "Nous soutenir", detail: "Participer aux traductions", or: "תודה")
                         }
                         .buttonStyle(StylePlein())
                     }
@@ -102,12 +92,14 @@ struct AccueilView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.top, 12)
-            .padding(.bottom, 24)
+            .padding(.top, 8)
+            .padding(.bottom, 28)
+            .largeurSite(1040)
         }
         .background(Theme.fond)
+        .navigationTitle("Chiourim")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .navigationBar)
+        .toolbar(classe == .regular ? .visible : .hidden, for: .navigationBar)
         .navigationDestination(for: RouteWeb.self) { route in
             VuePortail(url: route.url, ouvrirDiscussion: route.discussion)
                 .navigationTitle(route.titre)
@@ -125,30 +117,40 @@ struct AccueilView: View {
         return connus
     }
 
+    private func enteteSection(_ titre: String, _ detail: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(titre)
+                .font(.system(size: classe == .regular ? 20 : 18, weight: .semibold))
+                .foregroundStyle(Theme.bleu)
+                .accessibilityAddTraits(.isHeader)
+            Text(detail)
+                .font(.system(size: 14))
+                .foregroundStyle(Theme.gris)
+        }
+    }
+
     private func carteReprise(_ position: PositionLecture) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Reprendre la lecture")
-                .font(.system(size: 12, weight: .regular))
-                .tracking(1.1)
+                .font(.system(size: 12, weight: .semibold))
+                .tracking(0.6)
                 .textCase(.uppercase)
-                .foregroundStyle(Color(red: 0.914, green: 0.851, blue: 0.659))
+                .foregroundStyle(Theme.or)
             Text(position.titrePage.isEmpty ? position.unite : position.titrePage)
                 .font(Polices.titre(22))
                 .foregroundStyle(Theme.encreInverse)
-            if !position.resume.isEmpty {
-                Text(position.resume)
-                    .font(.subheadline)
-                    .foregroundStyle(Color(red: 0.875, green: 0.902, blue: 0.933))
-                    .lineLimit(2)
-            } else {
-                Text(position.oeuvreTitre)
-                    .font(.subheadline)
-                    .foregroundStyle(Color(red: 0.875, green: 0.902, blue: 0.933))
-            }
+            Text(position.resume.isEmpty ? position.oeuvreTitre : position.resume)
+                .font(.system(size: 15))
+                .foregroundStyle(Color(red: 0.910, green: 0.886, blue: 0.847))
+                .lineLimit(2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(Theme.bleu, in: RoundedRectangle(cornerRadius: 16))
+        .background(Theme.bleu, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(alignment: .leading) {
+            Rectangle().fill(Theme.or).frame(width: 4).padding(.vertical, 12)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .frame(minHeight: 44)
     }
 
@@ -165,31 +167,47 @@ struct AccueilView: View {
             default: break
             }
         } label: {
-            HStack(spacing: 14) {
-                TexteJustifie(texte: hebreu, police: Polices.hebreu, taille: 22, rtl: true, etirer: false, teinte: "Or")
-                    .frame(width: 72)
-                VStack(alignment: .leading, spacing: 2) {
+            CarteSite {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(hebreu)
+                        .font(Polices.hebreu(22))
+                        .foregroundStyle(Theme.or)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .environment(\.layoutDirection, .rightToLeft)
                     Text(titre)
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(Theme.encre)
-                    Text(detailCollection(id, nombre: nombre))
-                        .font(.system(size: 13))
+                    Text(Libelles.sousTitreCollection(id))
+                        .font(.system(size: 14))
                         .foregroundStyle(Theme.gris)
+                    Text(Libelles.compteOeuvres(nombre, collection: id))
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.or)
+                        .padding(.top, 2)
                 }
-                Spacer(minLength: 0)
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Theme.gris)
-                    .accessibilityHidden(true)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
-            .frame(minHeight: 44)
-            .background(Theme.papier, in: RoundedRectangle(cornerRadius: 14))
-            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.filet, lineWidth: 1))
         }
         .buttonStyle(StylePlein())
         .accessibilityLabel("\(titre), \(detailCollection(id, nombre: nombre))")
+    }
+
+    private func carteLien(titre: String, detail: String, or: String) -> some View {
+        CarteSite {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(or)
+                    .font(Polices.hebreu(20))
+                    .foregroundStyle(Theme.or)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .environment(\.layoutDirection, .rightToLeft)
+                    .accessibilityHidden(true)
+                Text(titre)
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(Theme.encre)
+                Text(detail)
+                    .font(.system(size: 14))
+                    .foregroundStyle(Theme.gris)
+            }
+        }
     }
 
     private func detailCollection(_ id: String, nombre: Int) -> String {
@@ -198,26 +216,6 @@ struct AccueilView: View {
         if sous.isEmpty { return compte }
         if id == "halakha", nombre == 0 { return sous }
         return "\(compte) · \(sous)"
-    }
-
-    private func ligneSimple(titre: String, detail: String) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(titre)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(Theme.encre)
-                Text(detail)
-                    .font(.system(size: 13))
-                    .foregroundStyle(Theme.gris)
-            }
-            Spacer(minLength: 0)
-            Image(systemName: "chevron.right")
-                .foregroundStyle(Theme.gris)
-                .accessibilityHidden(true)
-        }
-        .padding(.vertical, 12)
-        .frame(minHeight: 44)
-        .overlay(alignment: .bottom) { Rectangle().fill(Theme.filet).frame(height: 1) }
     }
 
     private func hebreuSecours(_ id: String) -> String {

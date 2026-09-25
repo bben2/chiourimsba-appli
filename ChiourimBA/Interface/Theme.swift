@@ -21,10 +21,100 @@ enum Polices {
     static let garamondTitre = "EBGaramond-SemiBold"
     static let hebreu = "FrankRuhlLibre-Regular_Medium"
     static let hebreuGras = "FrankRuhlLibre-Regular_Bold"
+    /// Texte français : police système, comme sur les sites.
+    static let francais = "Systeme"
 
-    static func titre(_ taille: CGFloat) -> Font { .custom(garamondTitre, size: taille) }
-    static func texte(_ taille: CGFloat) -> Font { .custom(garamond, size: taille) }
+    static func titre(_ taille: CGFloat) -> Font { .custom(hebreuGras, size: taille) }
+    static func texte(_ taille: CGFloat) -> Font { .system(size: taille) }
     static func hebreu(_ taille: CGFloat) -> Font { .custom(hebreu, size: taille) }
+}
+
+struct LargeurSite: ViewModifier {
+    var max: CGFloat
+    @Environment(\.horizontalSizeClass) private var classe
+
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: classe == .regular ? max : .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity)
+    }
+}
+
+extension View {
+    /// Colonne centrée. Lecture : 720. Sommaires : 1040, comme les sites.
+    func largeurSite(_ max: CGFloat = 1040) -> some View {
+        modifier(LargeurSite(max: max))
+    }
+}
+
+struct EnteteSite: View {
+    var hebreu: String
+    var titre: String
+    var sousTitre: String = ""
+    var pastille: String?
+    @Environment(\.horizontalSizeClass) private var classe
+
+    var body: some View {
+        VStack(spacing: 6) {
+            if !hebreu.isEmpty {
+                Text(hebreu)
+                    .font(Polices.hebreu(classe == .regular ? 40 : 34))
+                    .foregroundStyle(Theme.bleu)
+                    .environment(\.layoutDirection, .rightToLeft)
+                    .accessibilityLabel(hebreu)
+            }
+            Text(titre)
+                .font(Polices.titre(classe == .regular ? 32 : 28))
+                .foregroundStyle(Theme.encre)
+                .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
+            if !sousTitre.isEmpty {
+                Text(sousTitre)
+                    .font(.system(size: classe == .regular ? 17 : 15))
+                    .foregroundStyle(Theme.gris)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 640)
+            }
+            if let pastille, !pastille.isEmpty {
+                Text(pastille)
+                    .font(.system(size: 13))
+                    .foregroundStyle(Theme.gris)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 6)
+                    .background(Theme.papier, in: Capsule())
+                    .overlay(Capsule().stroke(Theme.filet, lineWidth: 1))
+                    .padding(.top, 6)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.bottom, 18)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Theme.filet).frame(height: 2)
+        }
+    }
+}
+
+struct CarteSite<Label: View>: View {
+    var or: Bool = true
+    @ViewBuilder var label: () -> Label
+
+    var body: some View {
+        label()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            .background(Theme.papier)
+            .clipShape(RoundedRectangle(cornerRadius: 11))
+            .overlay(RoundedRectangle(cornerRadius: 11).stroke(Theme.filet, lineWidth: 1))
+            .overlay(alignment: .leading) {
+                if or {
+                    Rectangle()
+                        .fill(Theme.or)
+                        .frame(width: 4)
+                        .padding(.vertical, 10)
+                }
+            }
+    }
 }
 
 struct TitreEcran: View {
@@ -34,7 +124,7 @@ struct TitreEcran: View {
     var body: some View {
         Text(texte)
             .font(Polices.titre(taille))
-            .foregroundStyle(Theme.bleu)
+            .foregroundStyle(Theme.encre)
             .accessibilityAddTraits(.isHeader)
     }
 }
@@ -164,7 +254,9 @@ struct TexteJustifie: UIViewRepresentable {
     }
 
     private func attributs() -> NSAttributedString {
-        let brut = UIFont(name: police, size: taille) ?? .systemFont(ofSize: taille)
+        let brut: UIFont = (police == Polices.francais || police.isEmpty)
+            ? .systemFont(ofSize: taille)
+            : (UIFont(name: police, size: taille) ?? .systemFont(ofSize: taille))
         let policeAdaptee = UIFontMetrics(forTextStyle: .body).scaledFont(for: brut)
         let trait = UITraitCollection(userInterfaceStyle: schema == .dark ? .dark : .light)
         let couleur = (UIColor(named: teinte) ?? .label).resolvedColor(with: trait)
@@ -194,8 +286,8 @@ enum HTMLSimple {
     /// Conversion locale. `NSAttributedString` + HTML passe par WebKit (`NSHTMLReader`),
     /// qui relance la run loop au milieu de `LazyVStack.sizeThatFits` et fait avorter AttributeGraph.
     static func attribue(_ html: String, taille: CGFloat) -> AttributedString {
-        let police = Font.custom(Polices.garamond, size: taille)
-        let policeGras = Font.custom(Polices.garamondTitre, size: taille)
+        let police = Font.system(size: taille)
+        let policeGras = Font.system(size: taille, weight: .semibold)
         var resultat = AttributedString()
         var tampon = ""
         var gras = 0
